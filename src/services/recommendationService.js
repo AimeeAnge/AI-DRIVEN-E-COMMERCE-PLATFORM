@@ -1,13 +1,13 @@
-import apiClient from "./apiClient";
-
 export const recommendationService = {
   list(params = {}) {
-    return apiClient.get("/api/v1/recommendations", { params });
+    void params;
+    return Promise.resolve([]);
   },
   forProduct(productId) {
-    return apiClient.get(`/api/v1/recommendations/products/${productId}`);
+    void productId;
+    return Promise.resolve([]);
   },
   performance() {
-    return apiClient.get("/api/v1/recommendations/performance");
+    return Promise.resolve({ unavailable: true, message: "Recommendation performance is not available yet." });
   }
 };

@@ -8,6 +8,6 @@ export const orderService = {
     return apiClient.get(`/api/v1/orders/${id}`);
   },
   checkout(payload) {
-    return apiClient.post("/api/v1/orders/checkout", payload);
+    return apiClient.post("/api/v1/orders", payload);
   }
 };

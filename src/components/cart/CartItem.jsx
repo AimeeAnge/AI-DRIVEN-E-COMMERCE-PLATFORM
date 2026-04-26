@@ -1,11 +1,12 @@
 import React from "react";
 import { formatCurrency } from "../../utils/formatters";
 import { getEntityId } from "../../utils/entity";
+import { resolveImageUrl } from "../../utils/images";
 import Icon from "../common/Icon";
 
 export default function CartItem({ item, onUpdate, onRemove }) {
   const product = item.product || item;
-  const image = product.imageUrl || product.image || product.images?.[0]?.url;
+  const image = resolveImageUrl(product.primary_image) || resolveImageUrl(product.images?.[0]) || resolveImageUrl(product.imageUrl) || product.image;
   const itemId = getEntityId(item);
 
   return (
@@ -27,7 +28,7 @@ export default function CartItem({ item, onUpdate, onRemove }) {
         </div>
       </div>
       <div className="cart-item__price">
-        <strong>{formatCurrency(item.total || product.price, product.currency)}</strong>
+        <strong>{formatCurrency(item.line_total || item.total || product.price, product.currency_code || product.currency)}</strong>
         <button className="ghost-button danger" type="button" onClick={() => onRemove?.(itemId)}>
           <Icon name="delete" size={18} />
           Remove

@@ -1,13 +1,22 @@
-import React, { useState } from "react";
-import { Link } from "../../routes/router.jsx";
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useRouter } from "../../routes/router.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { useCart } from "../../context/CartContext";
 import Icon from "./Icon";
 
+function dashboardPath(role) {
+  if (role === "admin") return "/admin";
+  if (role === "merchant") return "/merchant";
+  return "/dashboard";
+}
+
 export default function Header() {
-  const { token, role } = useAuth();
+  const headerRef = useRef(null);
+  const { token, role, user, logout } = useAuth();
+  const { navigate } = useRouter();
   const { itemCount } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
   const navLinks = [
     { to: "/", label: "Home" },
     { to: "/products", label: "Products" },
@@ -26,10 +35,39 @@ export default function Header() {
 
   function closeMenu() {
     setIsMenuOpen(false);
+    setIsAccountOpen(false);
   }
 
+  function handleLogout() {
+    logout();
+    closeMenu();
+    navigate("/login");
+  }
+
+  const accountLabel = user?.full_name || user?.email || "Account";
+  const accountDestination = dashboardPath(role);
+
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return undefined;
+
+    function updateHeaderHeight() {
+      document.documentElement.style.setProperty("--site-header-height", `${header.offsetHeight}px`);
+    }
+
+    updateHeaderHeight();
+    const resizeObserver = new ResizeObserver(updateHeaderHeight);
+    resizeObserver.observe(header);
+    window.addEventListener("resize", updateHeaderHeight);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", updateHeaderHeight);
+    };
+  }, []);
+
   return (
-    <header className="site-header">
+    <header className="site-header" ref={headerRef}>
       <div className="container site-header__inner">
         <Link to="/" className="brand" aria-label="AIDEP home">
           AIDEP
@@ -47,9 +85,41 @@ export default function Header() {
             <Icon name="search" size={19} />
             <input type="search" placeholder="Search products..." />
           </label>
-          <Link to="/login" className="icon-button" aria-label="Account" onClick={closeMenu}>
-            <Icon name="person" />
-          </Link>
+          {token ? (
+            <div className="account-menu">
+              <button
+                className="icon-button"
+                type="button"
+                aria-label="Open account menu"
+                aria-haspopup="menu"
+                aria-expanded={isAccountOpen}
+                onClick={() => {
+                  setIsAccountOpen((open) => !open);
+                  setIsMenuOpen(false);
+                }}
+              >
+                <Icon name="person" />
+              </button>
+              {isAccountOpen ? (
+                <div className="account-menu__panel" role="menu">
+                  <div className="account-menu__identity">
+                    <strong>{accountLabel}</strong>
+                    <span>{role}</span>
+                  </div>
+                  <Link to={accountDestination} role="menuitem" onClick={closeMenu}>
+                    Dashboard
+                  </Link>
+                  <button type="button" role="menuitem" onClick={handleLogout}>
+                    Logout
+                  </button>
+                </div>
+              ) : null}
+            </div>
+          ) : (
+            <Link to="/login" className="icon-button" aria-label="Account" onClick={closeMenu}>
+              <Icon name="person" />
+            </Link>
+          )}
           <Link to="/cart" className="icon-button cart-link" aria-label="Cart" onClick={closeMenu}>
             <Icon name="shopping_cart" />
             {itemCount > 0 ? <span className="cart-link__badge">{itemCount}</span> : null}

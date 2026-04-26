@@ -12,6 +12,7 @@ export function formatCurrency(value, currency = "USD") {
 export function asArray(payload, key = "items") {
   if (Array.isArray(payload)) return payload;
   if (Array.isArray(payload?.[key])) return payload[key];
+  if (Array.isArray(payload?.data?.[key])) return payload.data[key];
   if (Array.isArray(payload?.data)) return payload.data;
   return [];
 }

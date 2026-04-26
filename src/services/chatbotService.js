@@ -1,13 +1,17 @@
-import apiClient from "./apiClient";
+function unavailable() {
+  return Promise.reject(new Error("I'm not connected right now. Please try again later."));
+}
 
 export const chatbotService = {
   sendMessage(payload) {
-    return apiClient.post("/api/v1/chatbot/messages", payload);
+    void payload;
+    return unavailable();
   },
   listConversations() {
-    return apiClient.get("/api/v1/chatbot/conversations");
+    return Promise.resolve({ items: [], unavailable: true, message: "Chatbot conversations are not available yet." });
   },
   getConversation(id) {
-    return apiClient.get(`/api/v1/chatbot/conversations/${id}`);
+    void id;
+    return unavailable();
   }
 };

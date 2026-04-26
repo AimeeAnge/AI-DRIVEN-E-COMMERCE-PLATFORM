@@ -14,19 +14,29 @@ apiClient.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+  if (config.data instanceof FormData) {
+    if (typeof config.headers?.set === "function") {
+      config.headers.set("Content-Type", undefined);
+    } else {
+      delete config.headers["Content-Type"];
+      delete config.headers["content-type"];
+    }
+  }
   return config;
 });
 
 apiClient.interceptors.response.use(
   (response) => response.data,
   (error) => {
+    const backendMessage = error.response?.data?.error?.message || error.response?.data?.message;
     const apiError = new Error(
-      error.response?.data?.message ||
+      backendMessage ||
         error.message ||
         "AIDEP API request failed."
     );
     apiError.status = error.response?.status;
     apiError.details = error.response?.data;
+    apiError.config = error.config;
     throw apiError;
   }
 );

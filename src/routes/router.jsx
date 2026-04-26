@@ -2,7 +2,8 @@ import React, { createContext, useContext } from "react";
 
 export const RouterContext = createContext({
   path: window.location.pathname,
-  navigate: () => {}
+  navigate: () => {},
+  replace: () => {}
 });
 
 export function useRouter() {

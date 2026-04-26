@@ -1,11 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { useCart } from "../../context/CartContext";
+import { takeAuthNotice, takePendingCartProduct } from "../../hooks/useCartActions";
+import { useRouter } from "../../routes/router.jsx";
+import { friendlyApiError, roleMismatchMessage } from "../../utils/apiErrors";
 import Icon from "../common/Icon";
 import TextField from "./TextField";
 
+function destinationForRole(nextRole) {
+  if (nextRole === "admin") return "/admin";
+  if (nextRole === "merchant") return "/merchant";
+  return "/dashboard";
+}
+
 export default function AuthForm({ mode = "login" }) {
-  const { login, register, loading, error, role, setRole } = useAuth();
+  const { login, register, logout, loading, role, setRole } = useAuth();
+  const { addToCart } = useCart();
+  const { navigate } = useRouter();
   const [status, setStatus] = useState("");
+  const [formError, setFormError] = useState("");
   const roles = mode === "register" ? ["customer", "merchant"] : ["customer", "merchant", "admin"];
 
   useEffect(() => {
@@ -14,22 +27,64 @@ export default function AuthForm({ mode = "login" }) {
     }
   }, [mode, role, setRole]);
 
+  useEffect(() => {
+    if (mode === "login") {
+      const notice = takeAuthNotice();
+      if (notice) setStatus(notice);
+    }
+  }, [mode]);
+
   async function handleSubmit(event) {
     event.preventDefault();
     const form = Object.fromEntries(new FormData(event.currentTarget).entries());
     setStatus("");
+    setFormError("");
     try {
       const selectedRole = mode === "register" && role === "admin" ? "customer" : role;
+      let response;
       if (mode === "register") {
-        await register({ ...form, role: selectedRole });
+        response = await register({ ...form, role: selectedRole });
         setStatus("Your account request was submitted. You can sign in once it is approved.");
       } else {
-        await login({ ...form, role: selectedRole });
+        response = await login(form);
         setStatus("Welcome back.");
       }
+      const authData = response?.data || response || {};
+      const nextRole = authData?.user?.role;
+      if (!nextRole) {
+        logout();
+        setStatus("");
+        setFormError("We couldn't verify your account role. Please sign in again.");
+        return;
+      }
+      const mismatch = mode === "login" ? roleMismatchMessage(selectedRole, nextRole) : "";
+      if (mismatch) {
+        logout();
+        setStatus("");
+        setFormError(mismatch);
+        return;
+      }
+      const pendingCartProductId = mode === "login" && nextRole === "customer" ? takePendingCartProduct() : null;
+      if (pendingCartProductId) {
+        await addToCart(pendingCartProductId, 1);
+        navigate("/cart");
+        return;
+      }
+      if (mode === "login" && nextRole !== "customer") {
+        takePendingCartProduct();
+      }
+      navigate(destinationForRole(nextRole));
     } catch (authError) {
       console.log(authError);
       setStatus("");
+      setFormError(
+        friendlyApiError(
+          authError,
+          mode === "register"
+            ? "We couldn't create your account right now. Please try again later."
+            : "We couldn't sign you in right now. Please check your details and try again."
+        )
+      );
     }
   }
 
@@ -52,7 +107,7 @@ export default function AuthForm({ mode = "login" }) {
       <TextField label="Email address" id="email" name="email" type="email" autoComplete="email" required />
       <TextField label="Password" id="password" name="password" type="password" autoComplete={mode === "login" ? "current-password" : "new-password"} required />
       {mode === "register" && role === "merchant" ? <TextField label="Store name" id="storeName" name="storeName" /> : null}
-      {error ? <p className="form-error" role="alert">{mode === "register" ? "We couldn't create your account right now. Please try again later." : "We couldn't sign you in right now. Please check your details and try again."}</p> : null}
+      {formError ? <p className="form-error" role="alert">{formError}</p> : null}
       {status ? <p className="form-status" role="status">{status}</p> : null}
       <button className="primary-button" type="submit" disabled={loading}>
         {loading ? "Please wait..." : mode === "register" ? "Create Account" : "Sign In"}

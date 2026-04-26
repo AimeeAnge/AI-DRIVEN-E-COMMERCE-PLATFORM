@@ -2,10 +2,11 @@ import React from "react";
 import { Link } from "../../routes/router.jsx";
 import { formatCurrency } from "../../utils/formatters";
 import { getEntityId } from "../../utils/entity";
+import { resolveImageUrl } from "../../utils/images";
 import Icon from "../common/Icon";
 
 export default function ProductCard({ product, onAddToCart }) {
-  const image = product?.imageUrl || product?.image || product?.images?.[0]?.url;
+  const image = resolveImageUrl(product?.images?.[0]) || resolveImageUrl(product?.imageUrl) || product?.image;
   const id = getEntityId(product);
 
   return (
@@ -32,7 +33,7 @@ export default function ProductCard({ product, onAddToCart }) {
           {product?.description ? <p>{product.description}</p> : null}
         </div>
         <div className="product-card__footer">
-          <strong>{formatCurrency(product?.price, product?.currency)}</strong>
+          <strong>{formatCurrency(product?.price, product?.currency_code || product?.currency)}</strong>
           <button className="primary-button" type="button" disabled={!id} onClick={() => onAddToCart?.(id)}>
             <Icon name="shopping_cart" size={18} />
             Add

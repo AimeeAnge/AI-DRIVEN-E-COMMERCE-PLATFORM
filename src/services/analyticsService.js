@@ -5,12 +5,15 @@ export const analyticsService = {
     return apiClient.get("/api/v1/merchant/analytics");
   },
   admin() {
-    return apiClient.get("/api/v1/admin/analytics");
+    return Promise.resolve({ unavailable: true, message: "Admin analytics are not available yet." });
   },
   users() {
     return apiClient.get("/api/v1/admin/users");
   },
+  updateUserStatus(userId, status) {
+    return apiClient.patch(`/api/v1/admin/users/${userId}/status`, { status });
+  },
   chatbotConversations() {
-    return apiClient.get("/api/v1/admin/chatbot/conversations");
+    return Promise.resolve({ items: [], unavailable: true, message: "Chatbot conversations are not available yet." });
   }
 };

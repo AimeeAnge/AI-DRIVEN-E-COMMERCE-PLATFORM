@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "../../routes/router.jsx";
 import useApiResource from "../../hooks/useApiResource";
+import useCartActions from "../../hooks/useCartActions";
 import { productService } from "../../services/productService";
 import ProductGrid from "../../components/product/ProductGrid";
 import RecommendationCarousel from "../../components/recommendation/RecommendationCarousel";
@@ -16,6 +17,7 @@ const categories = [
 
 export default function HomePage() {
   const { data, loading, error, reload } = useApiResource(() => productService.list({ featured: true }), []);
+  const { addProductToCart, cartMessage, cartError } = useCartActions();
 
   return (
     <>
@@ -58,7 +60,9 @@ export default function HomePage() {
             <p className="muted">Fresh finds and popular picks will appear here.</p>
           </div>
         </div>
-        <ProductGrid products={data} loading={loading} error={error} onRetry={reload} />
+        {cartError ? <p className="form-error" role="alert">{cartError}</p> : null}
+        {cartMessage ? <p className="form-status" role="status">{cartMessage}</p> : null}
+        <ProductGrid products={data} loading={loading} error={error} onRetry={reload} onAddToCart={addProductToCart} />
       </section>
       <div className="container">
         <RecommendationCarousel context="home" title="Personalized discovery" />

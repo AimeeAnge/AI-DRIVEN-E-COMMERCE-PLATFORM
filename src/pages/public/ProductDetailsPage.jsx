@@ -5,11 +5,11 @@ import ProductSummary from "../../components/product/ProductSummary";
 import RecommendationGrid from "../../components/recommendation/RecommendationGrid";
 import StatusState from "../../components/common/StatusState";
 import useApiResource from "../../hooks/useApiResource";
+import useCartActions from "../../hooks/useCartActions";
 import { productService } from "../../services/productService";
-import { useCart } from "../../context/CartContext";
 
 export default function ProductDetailsPage({ params }) {
-  const { addToCart } = useCart();
+  const { addProductToCart, cartMessage, cartError } = useCartActions();
   const { data, loading, error, reload } = useApiResource(() => productService.getById(params.id), [params.id]);
   const product = data?.product || data;
 
@@ -19,9 +19,11 @@ export default function ProductDetailsPage({ params }) {
   return (
     <div className="container page-section">
       <PageHeader eyebrow="Product" title={product?.name || "Product details"} description="Explore details, availability, and helpful recommendations." />
+      {cartError ? <p className="form-error" role="alert">{cartError}</p> : null}
+      {cartMessage ? <p className="form-status" role="status">{cartMessage}</p> : null}
       <div className="product-detail-layout">
         <ProductGallery product={product} />
-        <ProductSummary product={product} onAddToCart={addToCart} />
+        <ProductSummary product={product} onAddToCart={addProductToCart} />
       </div>
       <RecommendationGrid productId={params.id} title="Complete the experience" />
     </div>

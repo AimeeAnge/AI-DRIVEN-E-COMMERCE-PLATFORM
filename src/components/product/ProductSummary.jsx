@@ -7,9 +7,9 @@ export default function ProductSummary({ product, onAddToCart }) {
 
   return (
     <section className="product-summary">
-      {product?.category ? <span className="badge">{product.category}</span> : null}
+      {product?.category ? <span className="badge">{product.category.name || product.category}</span> : null}
       <h1 className="title-lg">{product?.name || "Product details"}</h1>
-      <strong className="product-summary__price">{formatCurrency(product?.price, product?.currency)}</strong>
+      <strong className="product-summary__price">{formatCurrency(product?.price, product?.currency_code || product?.currency)}</strong>
       {product?.description ? <p className="muted">{product.description}</p> : null}
       <div className="product-summary__actions">
         <button className="primary-button" type="button" disabled={!id} onClick={() => onAddToCart?.(id)}>

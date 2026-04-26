@@ -3,6 +3,10 @@ import { cartService } from "../services/cartService";
 
 const CartContext = createContext(null);
 
+function normalizeCart(response) {
+  return response?.data?.cart || response?.cart || response?.data || response || null;
+}
+
 export function CartProvider({ children }) {
   const [cart, setCart] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -13,8 +17,9 @@ export function CartProvider({ children }) {
     setError(null);
     try {
       const response = await cartService.getCart();
-      setCart(response);
-      return response;
+      const nextCart = normalizeCart(response);
+      setCart(nextCart);
+      return nextCart;
     } catch (cartError) {
       console.log(cartError);
       setError(cartError);
@@ -26,14 +31,33 @@ export function CartProvider({ children }) {
 
   async function addToCart(productId, quantity = 1) {
     const response = await cartService.addItem(productId, quantity);
-    await refreshCart();
+    const nextCart = normalizeCart(response);
+    setCart(nextCart);
     return response;
   }
 
-  const itemCount = cart?.itemCount || cart?.items?.reduce((total, item) => total + Number(item.quantity || 0), 0) || 0;
+  async function updateCartItem(itemId, quantity) {
+    const response = await cartService.updateItem(itemId, quantity);
+    const nextCart = normalizeCart(response);
+    setCart(nextCart);
+    return response;
+  }
+
+  async function removeCartItem(itemId) {
+    const response = await cartService.removeItem(itemId);
+    const nextCart = normalizeCart(response);
+    setCart(nextCart);
+    return response;
+  }
+
+  function clearCart() {
+    setCart((current) => current ? { ...current, items: [], summary: { ...(current.summary || {}), item_count: 0, subtotal_amount: "0.00" } } : current);
+  }
+
+  const itemCount = cart?.summary?.item_count || cart?.itemCount || cart?.items?.reduce((total, item) => total + Number(item.quantity || 0), 0) || 0;
 
   const value = useMemo(
-    () => ({ cart, itemCount, loading, error, refreshCart, addToCart }),
+    () => ({ cart, itemCount, loading, error, refreshCart, addToCart, updateCartItem, removeCartItem, clearCart }),
     [cart, itemCount, loading, error]
   );
 
