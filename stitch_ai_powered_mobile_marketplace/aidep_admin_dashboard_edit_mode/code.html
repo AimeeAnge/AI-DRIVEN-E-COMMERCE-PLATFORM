@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AIDEP Admin Dashboard - VibrantMomentum</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed": "#e5e2e1",
+                        "surface-container-highest": "#dce2f3",
+                        "on-secondary-container": "#656464",
+                        "on-tertiary-container": "#002b76",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#001849",
+                        "surface-tint": "#a04100",
+                        "secondary-container": "#e5e2e1",
+                        "inverse-on-surface": "#ebf1ff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#ffdbcc",
+                        "outline-variant": "#e2bfb0",
+                        "on-surface": "#151c27",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#2a313d",
+                        "surface-container-high": "#e2e8f8",
+                        "inverse-primary": "#ffb693",
+                        "surface-variant": "#dce2f3",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#dae1ff",
+                        "on-primary-container": "#572000",
+                        "on-background": "#151c27",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "on-primary-fixed": "#351000",
+                        "on-primary-fixed-variant": "#7a3000",
+                        "background": "#f9f9ff",
+                        "secondary": "#5f5e5e",
+                        "primary": "#a04100",
+                        "primary-container": "#ff6b00",
+                        "surface-dim": "#d3daea",
+                        "surface-container-low": "#f0f3ff",
+                        "surface": "#f9f9ff",
+                        "outline": "#8e7164",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#b3c5ff",
+                        "tertiary": "#0054d6",
+                        "primary-fixed-dim": "#ffb693",
+                        "on-surface-variant": "#5a4136",
+                        "tertiary-container": "#6c94ff",
+                        "on-secondary-fixed-variant": "#474646",
+                        "surface-container": "#e7eefe",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#003fa4",
+                        "surface-bright": "#f9f9ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "1.25", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "label-bold": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                        "headline-xl": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background">
+<!-- SideNavBar (Shared Component) -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-gray-100 bg-white z-40 hidden md:flex flex-col p-4 gap-2">
+<div class="mb-8 px-4">
+<h1 class="text-xl font-bold text-orange-600 font-headline-md">Merchant Admin</h1>
+<p class="text-xs text-gray-500 font-label-sm">Vibrant Retail Pro</p>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Active: Dashboard -->
+<a class="flex items-center gap-3 bg-orange-50 text-orange-600 rounded-lg px-4 py-3 shadow-[0_4px_12px_rgba(255,107,0,0.1)] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-label-bold">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 text-gray-500 hover:bg-gray-50 hover:translate-x-1 rounded-lg px-4 py-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-label-bold">Inventory</span>
+</a>
+<a class="flex items-center gap-3 text-gray-500 hover:bg-gray-50 hover:translate-x-1 rounded-lg px-4 py-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+<span class="font-label-bold">Orders</span>
+</a>
+<a class="flex items-center gap-3 text-gray-500 hover:bg-gray-50 hover:translate-x-1 rounded-lg px-4 py-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-label-bold">Customers</span>
+</a>
+<a class="flex items-center gap-3 text-gray-500 hover:bg-gray-50 hover:translate-x-1 rounded-lg px-4 py-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-bold">Settings</span>
+</a>
+</nav>
+<div class="mt-auto p-4 bg-gray-50 rounded-xl">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">Alex Admin</p>
+<p class="text-xs text-gray-500">Super User</p>
+</div>
+</div>
+<button class="w-full bg-primary-container text-white py-2 px-4 rounded-lg font-label-bold active:scale-[0.98] transition-all duration-200">
+                Add New Item
+            </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 mr-0 lg:mr-80 min-h-screen transition-all">
+<!-- TopNavBar (Shared Component Fragment) -->
+<header class="sticky top-0 z-30 bg-white/80 backdrop-blur-xl border-b border-gray-100 px-6 py-3 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<h2 class="font-headline-lg text-primary">AIDEP Governance</h2>
+<div class="hidden sm:flex bg-gray-50 rounded-full px-4 py-2 items-center gap-2 border border-gray-100">
+<span class="material-symbols-outlined text-gray-400 text-sm" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-48" placeholder="Search analytics..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-gray-50 rounded-full text-gray-500 active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 hover:bg-gray-50 rounded-full text-gray-500 active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+</div>
+</header>
+<div class="p-8 space-y-8">
+<!-- Platform-wide User Metrics (Bento Grid) -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="col-span-1 md:col-span-2 bg-white rounded-2xl p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.04)] border border-gray-50">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="font-headline-md text-on-surface">Growth Velocity</h3>
+<p class="text-secondary font-body-md">Daily active users across all regions</p>
+</div>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-xs font-bold">+12.4%</span>
+</div>
+</div>
+<div class="h-64 flex items-end justify-between gap-2 px-2">
+<div class="w-full bg-orange-100 rounded-t-lg h-2/3 hover:bg-orange-600 transition-colors"></div>
+<div class="w-full bg-orange-100 rounded-t-lg h-3/4 hover:bg-orange-600 transition-colors"></div>
+<div class="w-full bg-orange-100 rounded-t-lg h-1/2 hover:bg-orange-600 transition-colors"></div>
+<div class="w-full bg-orange-200 rounded-t-lg h-4/5 hover:bg-orange-600 transition-colors"></div>
+<div class="w-full bg-primary-container rounded-t-lg h-full transition-colors"></div>
+<div class="w-full bg-orange-100 rounded-t-lg h-3/5 hover:bg-orange-600 transition-colors"></div>
+<div class="w-full bg-orange-200 rounded-t-lg h-2/3 hover:bg-orange-600 transition-colors"></div>
+</div>
+<div class="flex justify-between mt-4 text-xs font-label-sm text-gray-400 px-2">
+<span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span>
+</div>
+</div>
+<div class="space-y-6">
+<div class="bg-white rounded-2xl p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.04)] border border-gray-50">
+<span class="material-symbols-outlined text-orange-600 mb-2" data-icon="verified_user">verified_user</span>
+<h4 class="font-label-bold text-secondary">Verified Merchants</h4>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-headline-xl text-on-surface">1,284</span>
+<span class="text-xs text-green-500 font-bold">Live</span>
+</div>
+</div>
+<div class="bg-white rounded-2xl p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.04)] border border-gray-50">
+<span class="material-symbols-outlined text-orange-600 mb-2" data-icon="policy">policy</span>
+<h4 class="font-label-bold text-secondary">Governance Scores</h4>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-headline-xl text-on-surface">98.2%</span>
+<span class="text-xs text-orange-600 font-bold">Stable</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Merchant Applications (Glassmorphism List) -->
+<section class="space-y-4">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-on-surface">Pending Merchant Applications</h3>
+<button class="text-primary font-label-bold flex items-center gap-1 hover:underline">
+                        View Archive <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 gap-4">
+<!-- App Card 1 -->
+<div class="group bg-white hover:bg-orange-50 transition-all duration-300 rounded-2xl p-4 flex flex-col sm:flex-row items-center gap-6 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] border border-transparent hover:border-orange-100">
+<div class="w-16 h-16 rounded-xl bg-gray-100 overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="close-up of a modern boutique storefront sign with minimalist typography and elegant display window" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzPK8WBS8CUhsAjD1Cb0BkxsInnl8jUFgneItjs4U6OptcsCeW_gxDElRTUvoPxIypqTOWhsgQnftt-YF4qZOztuB-N9HnKw0gmzKUIMW6CJopWCzQG99MIkqs6w4dOPjR0K2_G_L_waT1wTY0EeQfHKv2Ln0S48qpPjCJaO8hYzSIIW4ICO-8xj_qUMufqsH0Ce2oO69pZjmRJ1WVVOH8jiTGb1Rrn4ZI_EUGPACGLmWO15XNPgt71DY3tqhnIo1FFXZ4Gsq_TUA_"/>
+</div>
+<div class="flex-1">
+<h4 class="font-label-bold text-lg text-on-surface">Velvet &amp; Vine Boutique</h4>
+<p class="text-sm text-secondary font-body-md italic">Submitted: Oct 24, 2023 • Luxury Apparel</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="text-right mr-4">
+<p class="text-xs font-label-sm text-gray-400 uppercase">Risk Level</p>
+<p class="text-sm font-bold text-green-600">LOW</p>
+</div>
+<button class="px-6 py-2 bg-primary-container text-white rounded-lg font-label-bold hover:shadow-[0_8px_16px_rgba(255,107,0,0.2)] active:scale-95 transition-all">Review</button>
+</div>
+</div>
+<!-- App Card 2 -->
+<div class="group bg-white hover:bg-orange-50 transition-all duration-300 rounded-2xl p-4 flex flex-col sm:flex-row items-center gap-6 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] border border-transparent hover:border-orange-100">
+<div class="w-16 h-16 rounded-xl bg-gray-100 overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="vibrant organic grocery stand with fresh vegetables and artisanal packaging in a bright marketplace setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2MeW8e-E-vO6t2Ijm3pgEVOLuhcJe-i4QsFVzd1iEK6c8uDcl94S7aD1Af422yryXhDeaIhhn01EFSwNA5K3aZvXrkA-9rgXfNvJlIG8PZj_xMJYV6DZejXkl1bbn-ZTIAz11TRVoXZrHwybuyefs8JQzjDaT5JP4cRrEqLfrQW_w8EMLphkXqQaOt6qYAkQaFQm_5icp9teVhmUOo32A2trT6bvMv6OHuj3pN6vgJ0Q2hRF4SOvBUkvOBwmyvkp9ofiYM73FzUUu"/>
+</div>
+<div class="flex-1">
+<h4 class="font-label-bold text-lg text-on-surface">Terracotta Organics</h4>
+<p class="text-sm text-secondary font-body-md italic">Submitted: Oct 25, 2023 • Fresh Goods</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="text-right mr-4">
+<p class="text-xs font-label-sm text-gray-400 uppercase">Risk Level</p>
+<p class="text-sm font-bold text-orange-500">MEDIUM</p>
+</div>
+<button class="px-6 py-2 bg-primary-container text-white rounded-lg font-label-bold hover:shadow-[0_8px_16px_rgba(255,107,0,0.2)] active:scale-95 transition-all">Review</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Administrative Actions Side Panel (Desktop only for this layout) -->
+<aside class="hidden lg:flex fixed right-0 top-0 h-screen w-80 bg-white border-l border-gray-100 flex-col p-6 z-40">
+<div class="flex items-center gap-2 mb-8">
+<span class="material-symbols-outlined text-orange-600" data-icon="bolt">bolt</span>
+<h3 class="font-headline-md text-on-surface">Admin Actions</h3>
+</div>
+<div class="space-y-8 overflow-y-auto">
+<!-- Action 1: Merchant Approval -->
+<div class="space-y-4">
+<p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Quick Approve</p>
+<div class="space-y-3">
+<label class="block">
+<span class="text-xs font-label-bold text-secondary mb-1 block">Merchant ID</span>
+<input class="w-full bg-gray-50 border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-orange-500 transition-all" placeholder="e.g. M-882-X" type="text"/>
+</label>
+<label class="block">
+<span class="text-xs font-label-bold text-secondary mb-1 block">Approval Note</span>
+<textarea class="w-full bg-gray-50 border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-orange-500 transition-all" placeholder="KYC confirmed..." rows="2"></textarea>
+</label>
+<button class="w-full bg-primary-container text-white py-3 rounded-xl font-label-bold flex items-center justify-center gap-2 shadow-[0_10px_20px_-5px_rgba(255,107,0,0.3)] hover:translate-y-[-2px] active:scale-95 transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span>
+                        Approve Merchant
+                    </button>
+</div>
+</div>
+<div class="h-px bg-gray-100"></div>
+<!-- Action 2: System Settings -->
+<div class="space-y-4">
+<p class="text-xs font-bold text-gray-400 uppercase tracking-widest">System Settings</p>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-gray-500" data-icon="lock">lock</span>
+<span class="text-sm font-medium">MFA Required</span>
+</div>
+<input checked="" class="text-orange-600 rounded focus:ring-orange-500 h-5 w-5" type="checkbox"/>
+</div>
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-gray-500" data-icon="campaign">campaign</span>
+<span class="text-sm font-medium">Maintenance</span>
+</div>
+<input class="text-orange-600 rounded focus:ring-orange-500 h-5 w-5" type="checkbox"/>
+</div>
+<label class="block">
+<span class="text-xs font-label-bold text-secondary mb-1 block">Platform Fee (%)</span>
+<input class="w-full bg-gray-50 border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-orange-500 transition-all" type="number" value="2.5"/>
+</label>
+<button class="w-full border-2 border-primary text-primary py-3 rounded-xl font-label-bold hover:bg-orange-50 active:scale-95 transition-all">
+                        Update Settings
+                    </button>
+</div>
+</div>
+<!-- Action 3: System Logs Quick View -->
+<div class="p-4 bg-orange-50 rounded-2xl border border-orange-100">
+<div class="flex items-center justify-between mb-3">
+<h5 class="text-sm font-bold text-orange-900">Health Check</h5>
+<div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-[10px] text-orange-800">
+<span>API Latency</span>
+<span>42ms</span>
+</div>
+<div class="w-full bg-orange-200 h-1 rounded-full overflow-hidden">
+<div class="bg-orange-600 h-full w-[15%]"></div>
+</div>
+<div class="flex justify-between text-[10px] text-orange-800">
+<span>CPU Load</span>
+<span>18%</span>
+</div>
+<div class="w-full bg-orange-200 h-1 rounded-full overflow-hidden">
+<div class="bg-orange-600 h-full w-[18%]"></div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- FAB for Mobile (Semantic Suppression logic would usually apply, but for dashboard we keep a global action) -->
+<button class="md:hidden fixed bottom-6 right-6 w-14 h-14 bg-primary-container text-white rounded-full shadow-2xl flex items-center justify-center z-50 active:scale-90 transition-all">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</body></html>

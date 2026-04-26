@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"primary-fixed": "#ffdbcc", "inverse-on-surface": "#ebf1ff", "secondary-fixed-dim": "#c8c6c5", "on-surface-variant": "#5a4136", "inverse-surface": "#2a313d", "on-primary-fixed": "#351000", "on-error-container": "#93000a", "primary-container": "#ff6b00", "on-surface": "#151c27", "on-primary-container": "#572000", "on-primary": "#ffffff", "on-tertiary-fixed": "#001849", "on-tertiary-container": "#002b76", surface: "#f9f9ff", "error-container": "#ffdad6", "tertiary-fixed": "#dae1ff", "surface-container-highest": "#dce2f3", "on-secondary-fixed-variant": "#474646", "on-background": "#151c27", "on-tertiary-fixed-variant": "#003fa4", "surface-tint": "#a04100", "tertiary-container": "#6c94ff", tertiary: "#0054d6", "outline-variant": "#e2bfb0", "surface-variant": "#dce2f3", "surface-dim": "#d3daea", outline: "#8e7164", error: "#ba1a1a", "primary-fixed-dim": "#ffb693", "on-primary-fixed-variant": "#7a3000", "on-secondary-container": "#656464", "surface-bright": "#f9f9ff", "surface-container": "#e7eefe", "surface-container-low": "#f0f3ff", "inverse-primary": "#ffb693", primary: "#a04100", "on-error": "#ffffff", "surface-container-lowest": "#ffffff", secondary: "#5f5e5e", "surface-container-high": "#e2e8f8", "secondary-fixed": "#e5e2e1", "on-secondary": "#ffffff", "on-tertiary": "#ffffff", "on-secondary-fixed": "#1c1b1b", background: "#f9f9ff", "secondary-container": "#e5e2e1", "tertiary-fixed-dim": "#b3c5ff"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {base: "8px", xl: "80px", md: "24px", xs: "4px", lg: "48px", gutter: "24px", margin: "32px", sm: "12px"}, fontFamily: {"label-bold": ["Plus Jakarta Sans"], "label-sm": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "body-lg": ["Plus Jakarta Sans"], "headline-xl": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], headline: ["Plus Jakarta Sans"], display: ["Plus Jakarta Sans"], body: ["Plus Jakarta Sans"], label: ["Plus Jakarta Sans"]}, fontSize: {"label-bold": ["14px", {lineHeight: "1.2", letterSpacing: "0.02em", fontWeight: "600"}], "label-sm": ["12px", {lineHeight: "1.2", fontWeight: "500"}], "body-md": ["16px", {lineHeight: "1.5", fontWeight: "400"}], "headline-md": ["24px", {lineHeight: "1.3", fontWeight: "700"}], "body-lg": ["18px", {lineHeight: "1.6", fontWeight: "400"}], "headline-xl": ["48px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "800"}], "headline-lg": ["32px", {lineHeight: "1.25", letterSpacing: "-0.01em", fontWeight: "700"}]}}}};</script>
+<style>
+        .glass-nav {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .product-card-shadow {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.04), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary-fixed">
+<header class="fixed top-0 w-full z-50 border-b border-slate-100 bg-white/80 backdrop-blur-md shadow-sm">
+<div class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto w-full">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-black tracking-tight text-orange-600">AIDEP</span>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="font-['Plus_Jakarta_Sans'] text-sm font-medium text-slate-600 hover:text-orange-500 transition-colors duration-200" href="#">Shop</a>
+<a class="font-['Plus_Jakarta_Sans'] text-sm font-medium text-slate-600 hover:text-orange-500 transition-colors duration-200" href="#">Categories</a>
+<a class="font-['Plus_Jakarta_Sans'] text-sm font-medium text-slate-600 hover:text-orange-500 transition-colors duration-200" href="#">Deals</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden lg:flex items-center bg-slate-50 rounded-full px-4 py-2 border border-slate-100 focus-within:border-orange-500 transition-all">
+<span class="material-symbols-outlined text-slate-400 text-xl">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm font-label-sm w-64" placeholder="Search products..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-slate-600 hover:bg-slate-50 rounded-full transition-colors active:scale-95">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</button>
+<button class="p-2 text-slate-600 hover:bg-slate-50 rounded-full transition-colors active:scale-95 relative">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+<span class="absolute top-1 right-1 w-4 h-4 bg-primary-container text-white text-[10px] flex items-center justify-center rounded-full font-bold">2</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-xl max-w-7xl mx-auto px-6">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<div class="lg:col-span-7">
+<div class="sticky top-24 space-y-6">
+<div class="aspect-square bg-white rounded-3xl overflow-hidden product-card-shadow group">
+<img alt="Premium Noise Cancelling Headphones" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="studio shot of premium sleek black wireless headphones with metallic accents on a clean minimalist light grey background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvWAlY2EWTIQFp2rl1JfsdwXjWvLYCs8VG_2vBz05meJ2uig3dU1deXVCMoKnZn5doRuv7IEsRaqYOzLoFt53USts2zUFwv-FGyZSzhNlekkz8V8D_xj0majAtRaWH_Puf9V13LtmW78Nk4eCutYMW2XAESc60Ktl-HGWx0CKRYdwuhfI2KiW86G69OQwlOiQR12JrH7trFmYdWI-h39K2dytWMFVeXrpgfGOAXhOpTbKCd4HKupiqzLdaDmS9Yyry6rIptXe36hDA"/>
+</div>
+<div class="grid grid-cols-4 gap-4">
+<div class="aspect-square rounded-xl overflow-hidden cursor-pointer ring-2 ring-primary-container">
+<img class="w-full h-full object-cover" data-alt="close up of wireless headphone earcups showing plush leather material and precision stitching in soft studio light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDj5TYVoh6LrxtPV6MOCDA91Kjmry076IzCngxvFMWodjt5UpLSGiHgk-25lNwusF8mIoc3rAI7hXTyj6_KjsEs-tAc0CMbDKuY_ohamVyTbtNlwd2PvjtC1gcG2GPkOTLw6aG3G9da7v7AoBjskKS5bw52gOAPl-yx6TqK2_Pdtrul6Lt3kOK_r61lqvQgJoLW-SRzuvocP0-bj-gNeVExCiakMfffMLDFRdabmUKppe0aXoXDVjhIbNLLYGf7mjUlKoa7BpPDfOu"/>
+</div>
+<div class="aspect-square rounded-xl overflow-hidden cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
+<img class="w-full h-full object-cover" data-alt="lifestyle shot of professional headphones placed on a modern wooden desk next to a sleek laptop and coffee cup" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChePYTBijeXSNwr8KJjZCTbZ5lAcb0UOPHMDFipjPG_LkJV-eFxZfGhuE7IbQoEmf-W3KLh1DvCK7zCTnVcrGFQT4WvxFNxzjtTn2ON43-JW5NymjcxFicajUgYLZV29vXS-i1sX5jGM-3hdjBIYlsvLjoP4oWRvIcaAyQF3sAt-9SdvLHi8XnS9ZA--p1MTARuPSlniDqji2LPdF05hs89evkM1VYTAzQCb1moLC4iJI9zqygXQ6V7STF88I-l4AuDODFCLc4m62L"/>
+</div>
+<div class="aspect-square rounded-xl overflow-hidden cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
+<img class="w-full h-full object-cover" data-alt="front view of professional over-ear headphones highlighting the adjustable headband and sleek ergonomic design" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFxUdfUTOLg_8oToa1fEMBashHzJBvl_a8_lXOhwZ5VUO6NsbnEJ9uI2OsojbOPY6yKTkImt0rJe9a3vurTF8WmMQ72M32ZTxmarRHdX7SMTy9pWDTc6oz1zGLH-C3INflr1ZFNLQrNWzy4LMCx-U7AgvCUbTyM55LkoWVFJa4Vkh3_zYOoTnH_GYtjRpVqttWVtMGtnJFktO6z7-hyud7LK64mcWYgxyiPrPsmGQx4l8_Z2vInDwQEPSu9qoUwNk_38e2vgFreUKU"/>
+</div>
+<div class="aspect-square rounded-xl overflow-hidden cursor-pointer opacity-70 hover:opacity-100 transition-opacity bg-slate-200 flex items-center justify-center">
+<span class="text-label-bold text-slate-500">+2 more</span>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-5 space-y-8">
+<div class="space-y-4">
+<div class="flex items-center gap-2">
+<span class="px-3 py-1 bg-orange-50 text-orange-600 rounded-full font-label-bold text-[12px] uppercase tracking-wider">Premium Audio</span>
+<span class="flex items-center gap-1 text-orange-500">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-bold text-sm">4.9 (124 reviews)</span>
+</span>
+</div>
+<h1 class="font-headline-lg text-on-surface">Acoustica Ultra Pro X Wireless</h1>
+<p class="font-headline-md text-primary-container font-bold">$349.00</p>
+</div>
+<div class="space-y-4">
+<p class="font-body-lg text-secondary leading-relaxed">
+                        Experience pure sound with the Acoustica Ultra Pro X. Featuring advanced adaptive noise cancellation and high-fidelity audio drivers, these headphones deliver an immersive listening experience that lasts up to 60 hours on a single charge.
+                    </p>
+<ul class="space-y-3">
+<li class="flex items-center gap-3 text-slate-600">
+<span class="material-symbols-outlined text-orange-500 text-xl">check_circle</span>
+<span class="text-body-md">Adaptive Hybrid Active Noise Cancellation</span>
+</li>
+<li class="flex items-center gap-3 text-slate-600">
+<span class="material-symbols-outlined text-orange-500 text-xl">check_circle</span>
+<span class="text-body-md">Up to 60-Hour Battery Life</span>
+</li>
+<li class="flex items-center gap-3 text-slate-600">
+<span class="material-symbols-outlined text-orange-500 text-xl">check_circle</span>
+<span class="text-body-md">Lossless Audio via USB-C or Bluetooth 5.3</span>
+</li>
+</ul>
+</div>
+<div class="space-y-6 pt-6 border-t border-slate-100">
+<div class="flex items-center gap-4">
+<div class="flex items-center border border-slate-200 rounded-xl px-2 py-1">
+<button class="p-2 hover:text-orange-500 transition-colors"><span class="material-symbols-outlined">remove</span></button>
+<span class="w-12 text-center font-label-bold">1</span>
+<button class="p-2 hover:text-orange-500 transition-colors"><span class="material-symbols-outlined">add</span></button>
+</div>
+<button class="flex-1 bg-primary-container text-white py-4 rounded-xl font-label-bold shadow-lg shadow-orange-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3">
+<span class="material-symbols-outlined">shopping_bag</span>
+                            Add to Cart
+                        </button>
+</div>
+<button class="w-full border-1.5 border-slate-200 text-slate-700 py-4 rounded-xl font-label-bold hover:bg-slate-50 active:scale-[0.98] transition-all">
+                        Buy with Apple Pay
+                    </button>
+</div>
+<div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 space-y-4">
+<div class="flex items-center gap-3 text-on-surface">
+<span class="material-symbols-outlined text-orange-500">local_shipping</span>
+<div>
+<p class="font-label-bold">Free Express Delivery</p>
+<p class="text-xs text-slate-500">Expected by Thursday, Nov 14</p>
+</div>
+</div>
+<div class="flex items-center gap-3 text-on-surface">
+<span class="material-symbols-outlined text-orange-500">verified_user</span>
+<div>
+<p class="font-label-bold">2-Year Limited Warranty</p>
+<p class="text-xs text-slate-500">Full coverage for manufacturing defects</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section class="mt-xl space-y-8">
+<div class="flex justify-between items-end">
+<div class="space-y-2">
+<h2 class="font-headline-lg">Complete the Experience</h2>
+<p class="text-secondary">Hand-picked accessories for your Acoustica</p>
+</div>
+<a class="text-primary-container font-label-bold flex items-center gap-1 hover:gap-2 transition-all" href="#">
+                    View All <span class="material-symbols-outlined text-base">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+<div class="group cursor-pointer">
+<div class="aspect-[4/5] bg-white rounded-2xl overflow-hidden product-card-shadow mb-4 relative">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="minimalist wooden headphone stand on a white desk with soft shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFxViI37OyXnYcSZnHiOxgugjGXEKLzzfsAy4vgQpp7XTrS9j3AHwhyV0b9wHBrguLo1QgaZWre47IaQW-CQuUnVb6C-4aK9CmD2Dl32x3TFsaNOsWpQTIknVNHIzggJqvQdNDZj8uIZLKiBNYe2UB4cJInibe6gaPPQK5zHjJYKsbSN5sFZi6RngCbiNaHF-EsCYg5kYkF7TR8Pc_YPS1wBf09x0pF1fgd2vqqdCetILIb1m3rtH-ynJzcy0j2jby8lIOFkmhV6pR"/>
+<button class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-md p-2 rounded-full opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+<span class="material-symbols-outlined text-orange-500">add</span>
+</button>
+</div>
+<h3 class="font-label-bold text-slate-800">Zen Stand Walnut</h3>
+<p class="text-primary-container font-bold">$89.00</p>
+</div>
+<div class="group cursor-pointer">
+<div class="aspect-[4/5] bg-white rounded-2xl overflow-hidden product-card-shadow mb-4 relative">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="hard shell protective travel case for headphones with smooth fabric texture and zipper detail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAo1_CteOt2cORyOcrvP1nuJOOSGQW9XtckekbrybD-5cTJD-sHnhmdDWcaLJ1LvpycPc90ZGt_6W5Fca0w3gmXw-_p8vvT6RESUwxOg7Ki5RbTZFBOZwFvhq04TvvEzTtlPyKL3wxx5Rl_Ja2Qld2bwRGV2Gyo-Nl2quoKwRE7zKR1yIJhCxbBzAEJj8R_aZZDvyhbjojG5nyzG15r-rDQA5JXvcJUZwvhsFF-vXhpB53lHShYoi2fl69NqMpDrqWtrzewyEHbUl_V"/>
+<button class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-md p-2 rounded-full opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+<span class="material-symbols-outlined text-orange-500">add</span>
+</button>
+</div>
+<h3 class="font-label-bold text-slate-800">Nomad Carry Case</h3>
+<p class="text-primary-container font-bold">$45.00</p>
+</div>
+<div class="group cursor-pointer">
+<div class="aspect-[4/5] bg-white rounded-2xl overflow-hidden product-card-shadow mb-4 relative">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="premium leather replacement ear pads for over-ear headphones in a rich tan color" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrpjdAxVXtWVsL45amElDnU5nw0_8VNC8kQPYjSTX_-eKzaPdxJzIYLtnAHzSdZuwX1ltYbYjowg2Jr2e3GVnj8ER2E-aL3XSlYin4WX6H0ttN2IVhZjKf2rMK-RdvGlcavGAn6nxZeN1ZyoQ3TixK6HURfkuGwLK4NHa7GcxbWtWB7S_uhOTI1lwelBUAhaE0YVcrxvE5jBH-g6jIFnk3b9i2LDk4I0dkIQP2UnFTZtioLCVkf174odaGY2OGJBbeYYHrPut6AMz9"/>
+<button class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-md p-2 rounded-full opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+<span class="material-symbols-outlined text-orange-500">add</span>
+</button>
+</div>
+<h3 class="font-label-bold text-slate-800">Leather Comfort Pads</h3>
+<p class="text-primary-container font-bold">$35.00</p>
+</div>
+<div class="group cursor-pointer">
+<div class="aspect-[4/5] bg-white rounded-2xl overflow-hidden product-card-shadow mb-4 relative">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="braided gold plated audio cable for professional headphones on a dark textured background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2OaXN2l67-BUdMeuAkQ93vJjpZ3z-OWesTHNwpgchSd_y2YjDsuXy6HGcD5AkjO-nNV2hai25TPEYX3ZE7XN7nt5WfYfspX-5cjDg28_--zkVzy5cNNN2U4A3IiGVTrKPJA10C_oj9CeTB0GbkkiEbMR_JBJJcSZY0DL2BENavCVxDdmaZ1y9Jo73Tq1eDI8YAaN3chtlTWdTkYy1lMB83mVoihSikfA2iELvjb8TH48RWJFtGYLOHz1K80QFupjavW4h4VM48E4c"/>
+<button class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-md p-2 rounded-full opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+<span class="material-symbols-outlined text-orange-500">add</span>
+</button>
+</div>
+<h3 class="font-label-bold text-slate-800">Audiophile Braided Cable</h3>
+<p class="text-primary-container font-bold">$59.00</p>
+</div>
+</div>
+</section>
+</main>
+<button class="fixed bottom-8 right-8 bg-slate-900 text-white pl-6 pr-8 py-4 rounded-full shadow-2xl flex items-center gap-3 z-50 hover:scale-105 active:scale-95 transition-all group">
+<div class="relative w-8 h-8 flex items-center justify-center">
+<span class="absolute inset-0 bg-orange-500 rounded-full blur-md opacity-0 group-hover:opacity-40 transition-opacity"></span>
+<span class="material-symbols-outlined relative z-10 text-orange-500">smart_toy</span>
+</div>
+<span class="font-label-bold tracking-tight">Ask AI about this product</span>
+</button>
+<footer class="w-full border-t border-slate-200 bg-slate-50 mt-xl">
+<div class="max-w-7xl mx-auto px-8 py-12 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="space-y-4 text-center md:text-left">
+<span class="text-lg font-bold text-slate-900">AIDEP</span>
+<p class="font-['Plus_Jakarta_Sans'] text-xs leading-relaxed text-slate-500 max-w-xs">
+                    Curating the future of technology with a focus on design, utility, and modern momentum.
+                </p>
+</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="font-['Plus_Jakarta_Sans'] text-xs text-slate-500 hover:text-orange-500 hover:underline transition-all" href="#">Privacy Policy</a>
+<a class="font-['Plus_Jakarta_Sans'] text-xs text-slate-500 hover:text-orange-500 hover:underline transition-all" href="#">Terms of Service</a>
+<a class="font-['Plus_Jakarta_Sans'] text-xs text-slate-500 hover:text-orange-500 hover:underline transition-all" href="#">Shipping Info</a>
+<a class="font-['Plus_Jakarta_Sans'] text-xs text-slate-500 hover:text-orange-500 hover:underline transition-all" href="#">Returns</a>
+</div>
+<p class="font-['Plus_Jakarta_Sans'] text-xs leading-relaxed text-slate-500">
+                © 2024 AIDEP E-commerce. All rights reserved.
+            </p>
+</div>
+</footer>
+</body></html>

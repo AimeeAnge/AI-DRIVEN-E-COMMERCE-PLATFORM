@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AIDEP | AI Assistant</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"primary-fixed": "#ffdbcc", "inverse-on-surface": "#ebf1ff", "secondary-fixed-dim": "#c8c6c5", "on-surface-variant": "#5a4136", "inverse-surface": "#2a313d", "on-primary-fixed": "#351000", "on-error-container": "#93000a", "primary-container": "#ff6b00", "on-surface": "#151c27", "on-primary-container": "#572000", "on-primary": "#ffffff", "on-tertiary-fixed": "#001849", "on-tertiary-container": "#002b76", surface: "#f9f9ff", "error-container": "#ffdad6", "tertiary-fixed": "#dae1ff", "surface-container-highest": "#dce2f3", "on-secondary-fixed-variant": "#474646", "on-background": "#151c27", "on-tertiary-fixed-variant": "#003fa4", "surface-tint": "#a04100", "tertiary-container": "#6c94ff", tertiary: "#0054d6", "outline-variant": "#e2bfb0", "surface-variant": "#dce2f3", "surface-dim": "#d3daea", outline: "#8e7164", error: "#ba1a1a", "primary-fixed-dim": "#ffb693", "on-primary-fixed-variant": "#7a3000", "on-secondary-container": "#656464", "surface-bright": "#f9f9ff", "surface-container": "#e7eefe", "surface-container-low": "#f0f3ff", "inverse-primary": "#ffb693", primary: "#a04100", "on-error": "#ffffff", "surface-container-lowest": "#ffffff", secondary: "#5f5e5e", "surface-container-high": "#e2e8f8", "secondary-fixed": "#e5e2e1", "on-secondary": "#ffffff", "on-tertiary": "#ffffff", "on-secondary-fixed": "#1c1b1b", background: "#f9f9ff", "secondary-container": "#e5e2e1", "tertiary-fixed-dim": "#b3c5ff"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {base: "8px", xl: "80px", md: "24px", xs: "4px", lg: "48px", gutter: "24px", margin: "32px", sm: "12px"}, fontFamily: {"label-bold": ["Plus Jakarta Sans"], "label-sm": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "body-lg": ["Plus Jakarta Sans"], "headline-xl": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], headline: ["Plus Jakarta Sans"], display: ["Plus Jakarta Sans"], body: ["Plus Jakarta Sans"], label: ["Plus Jakarta Sans"]}, fontSize: {"label-bold": ["14px", {lineHeight: "1.2", letterSpacing: "0.02em", fontWeight: "600"}], "label-sm": ["12px", {lineHeight: "1.2", fontWeight: "500"}], "body-md": ["16px", {lineHeight: "1.5", fontWeight: "400"}], "headline-md": ["24px", {lineHeight: "1.3", fontWeight: "700"}], "body-lg": ["18px", {lineHeight: "1.6", fontWeight: "400"}], "headline-xl": ["48px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "800"}], "headline-lg": ["32px", {lineHeight: "1.25", letterSpacing: "-0.01em", fontWeight: "700"}]}}}};</script>
+<style>
+        .chat-container {
+            height: calc(100vh - 72px);
+        }
+        .message-shadow {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2e8f8;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased overflow-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 border-b bg-white/80 backdrop-blur-md border-slate-100 shadow-sm">
+<div class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto w-full">
+<div class="flex items-center gap-4">
+<span class="text-2xl font-black tracking-tight text-orange-600">AIDEP</span>
+<div class="hidden md:flex gap-6 ml-8">
+<a class="font-['Plus_Jakarta_Sans'] text-sm font-medium text-slate-600 hover:text-orange-500 transition-colors duration-200" href="#">Shop</a>
+<a class="font-['Plus_Jakarta_Sans'] text-sm font-medium text-slate-600 hover:text-orange-500 transition-colors duration-200" href="#">Categories</a>
+<a class="font-['Plus_Jakarta_Sans'] text-sm font-medium text-orange-600 font-bold border-b-2 border-orange-600 pb-1" href="#">AI Assistant</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-slate-50 transition-colors duration-200 active:scale-95 text-slate-600">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</button>
+<button class="p-2 rounded-full hover:bg-slate-50 transition-colors duration-200 active:scale-95 text-slate-600">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Main Chat Content -->
+<main class="pt-[72px] h-screen flex flex-col md:flex-row max-w-7xl mx-auto w-full">
+<!-- Sidebar - Suggested Actions & History -->
+<aside class="hidden md:flex w-80 flex-col border-r border-slate-100 bg-surface-container-lowest p-6 gap-8">
+<div>
+<h3 class="text-label-bold font-label-bold text-on-surface-variant mb-4">Quick Actions</h3>
+<div class="space-y-2">
+<button class="w-full text-left px-4 py-3 rounded-xl hover:bg-primary-fixed/30 transition-all duration-200 group flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="auto_awesome">auto_awesome</span>
+<span class="text-label-bold font-label-bold">Recommend products</span>
+</button>
+<button class="w-full text-left px-4 py-3 rounded-xl hover:bg-primary-fixed/30 transition-all duration-200 group flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="local_shipping">local_shipping</span>
+<span class="text-label-bold font-label-bold">Where is my order?</span>
+</button>
+<button class="w-full text-left px-4 py-3 rounded-xl hover:bg-primary-fixed/30 transition-all duration-200 group flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="help">help</span>
+<span class="text-label-bold font-label-bold">Help me choose</span>
+</button>
+</div>
+</div>
+<div>
+<h3 class="text-label-bold font-label-bold text-on-surface-variant mb-4">Recent Inquiries</h3>
+<div class="space-y-4">
+<div class="flex items-center gap-3 opacity-60">
+<span class="material-symbols-outlined text-sm" data-icon="chat_bubble">chat_bubble</span>
+<span class="text-label-sm font-label-sm truncate">Blue denim jacket sizing...</span>
+</div>
+<div class="flex items-center gap-3 opacity-60">
+<span class="material-symbols-outlined text-sm" data-icon="chat_bubble">chat_bubble</span>
+<span class="text-label-sm font-label-sm truncate">Return policy for electronics...</span>
+</div>
+</div>
+</div>
+<div class="mt-auto">
+<div class="p-4 rounded-2xl bg-primary-fixed/20 border border-primary-fixed/50">
+<p class="text-label-sm font-label-sm text-on-primary-fixed mb-2">Need a human?</p>
+<button class="text-primary font-label-bold flex items-center gap-1 hover:gap-2 transition-all">
+                        Talk to Support <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Chat Window -->
+<section class="flex-1 flex flex-col relative bg-surface-container-low">
+<!-- Messages Scroll Area -->
+<div class="flex-1 overflow-y-auto p-6 md:p-10 space-y-8 custom-scrollbar">
+<!-- Bot Welcome -->
+<div class="flex gap-4 max-w-2xl">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-white text-xl" data-icon="smart_toy">smart_toy</span>
+</div>
+<div class="space-y-2">
+<div class="bg-white p-5 rounded-2xl rounded-tl-none message-shadow">
+<p class="text-body-md font-body-md text-on-surface">Hello! I'm your AIDEP personal shopper. How can I assist you today?</p>
+</div>
+<span class="text-[10px] text-secondary/60 uppercase font-bold tracking-widest px-1">AIDEP BOT • 10:24 AM</span>
+</div>
+</div>
+<!-- Suggested Chips (Mid-conversation) -->
+<div class="flex flex-wrap gap-2 ml-14">
+<button class="px-4 py-2 rounded-full border border-primary-fixed bg-white text-primary text-label-sm font-label-bold hover:bg-primary-fixed/20 transition-colors">Track an Order</button>
+<button class="px-4 py-2 rounded-full border border-primary-fixed bg-white text-primary text-label-sm font-label-bold hover:bg-primary-fixed/20 transition-colors">Today's Deals</button>
+<button class="px-4 py-2 rounded-full border border-primary-fixed bg-white text-primary text-label-sm font-label-bold hover:bg-primary-fixed/20 transition-colors">Gift Guide</button>
+</div>
+<!-- User Message -->
+<div class="flex gap-4 max-w-2xl ml-auto flex-row-reverse">
+<div class="w-10 h-10 rounded-full overflow-hidden shrink-0">
+<img alt="User" class="w-full h-full object-cover" data-alt="portrait of a young woman with a friendly smile, natural daylight, soft bokeh background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmGxEB9fL0AWU05bnQATzkRVVMCcvq1k6BTnBcvbPihZKRIY86I_WGJbe09bwae8ldUNWTeZNf2BWBiMyhy6peSWhjAgn_VrCA13A5Y0y0akqGlWNVKPPIKtr5GAOa1qsD3P5datzHvNHr_LjiRwIGcBRJ8_-l9kscNyV8fyaTtuReL1lLtBvqwA9-fz80m51V-4GxCeCq3Tn3fYVCpUAC-oAsnrULRxbztqVm1AdobRZwQ19IbcFjsCVnDMeP_236TvUdN4PnRRAf"/>
+</div>
+<div class="space-y-2 text-right">
+<div class="bg-primary text-white p-5 rounded-2xl rounded-tr-none shadow-lg shadow-primary/20">
+<p class="text-body-md font-body-md">I'm looking for some minimalist home office decor recommendations. Something clean and modern.</p>
+</div>
+<span class="text-[10px] text-secondary/60 uppercase font-bold tracking-widest px-1">YOU • 10:25 AM</span>
+</div>
+</div>
+<!-- Bot Response with Product Cards -->
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-white text-xl" data-icon="smart_toy">smart_toy</span>
+</div>
+<div class="space-y-4 max-w-3xl">
+<div class="bg-white p-5 rounded-2xl rounded-tl-none message-shadow">
+<p class="text-body-md font-body-md text-on-surface">Great choice! Minimalism is very on-trend. Here are three top-rated minimalist items for your home office:</p>
+</div>
+<!-- Product Layout (Bento Grid Style) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="bg-white p-3 rounded-2xl message-shadow group cursor-pointer hover:scale-[1.02] transition-transform">
+<div class="h-40 rounded-xl overflow-hidden mb-3 bg-slate-50">
+<img alt="Lamp" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="sleek modern minimalist LED desk lamp in matte white finish on a clean wooden desk" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSbfT1zoKS0z-mpSgtj2F0ux2s4Xss8UTTsEI4JCgBWsDF1Evnu1CM7nYatcy76HhY5fvOuksbA7KQIICjxcgo117bRWARGRqqzzWxqBN410z7HJ1KmRQJ2euKD4NUi_tclowHb6t7agIXX40XLBjmrY8desBgVM8ErbV3TqkfixyaOVqlDHcCU7DjQkBkl6_ZU8Al5R5rw25913K1RERF4tN3YRKXu46Cx5IgZRRtoSDK85Ve39hsvVKNNLL4viQQF-x_S1I79Ei2"/>
+</div>
+<div class="px-2">
+<p class="font-label-bold text-on-surface">Lumina Slim Desk Lamp</p>
+<div class="flex justify-between items-center mt-2">
+<span class="text-primary font-bold">$49.99</span>
+<button class="bg-primary-fixed/50 p-2 rounded-lg text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="add_shopping_cart">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<div class="bg-white p-3 rounded-2xl message-shadow group cursor-pointer hover:scale-[1.02] transition-transform">
+<div class="h-40 rounded-xl overflow-hidden mb-3 bg-slate-50">
+<img alt="Organizer" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="minimalist concrete desk organizer set with wooden accents, high quality photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA42QJxYh5BdMsJkmowrXI501FGpYJ3zDmu7Fs7efdjTpQLx6hjgutWx-KXUeGHN7VF9VCiIsRrnzK-oCLVZOHXP9CLGj4lri9KZ1S7ngDBkrBsaYvFQ5esu0JSp4IcS4hJgK8wEO6WQhkUWIXA3McZwTmqnUn_XeZLQPCMHCzRwbCcLiMR06wcP6CI4F53Sx0WUMlvQDbWKPjdH69kJNdrsIaq6Bc3xlPr5WgGwLY2ujswGyppqxE1jCB8c60DtHgIVp5tZn1bEDIb"/>
+</div>
+<div class="px-2">
+<p class="font-label-bold text-on-surface">Concrete Modular Tray</p>
+<div class="flex justify-between items-center mt-2">
+<span class="text-primary font-bold">$24.00</span>
+<button class="bg-primary-fixed/50 p-2 rounded-lg text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="add_shopping_cart">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Typing Indicator -->
+<div class="flex gap-4 animate-pulse">
+<div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary/40 text-xl" data-icon="smart_toy">smart_toy</span>
+</div>
+<div class="bg-white py-3 px-6 rounded-full rounded-tl-none message-shadow flex gap-1 items-center">
+<div class="w-2 h-2 bg-primary/40 rounded-full"></div>
+<div class="w-2 h-2 bg-primary/40 rounded-full"></div>
+<div class="w-2 h-2 bg-primary/40 rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Input Area -->
+<div class="p-4 md:p-8 bg-gradient-to-t from-surface-container-low via-surface-container-low to-transparent">
+<div class="max-w-4xl mx-auto w-full relative">
+<!-- Suggested Chips Floating -->
+<div class="flex gap-2 overflow-x-auto pb-4 no-scrollbar">
+<button class="whitespace-nowrap px-4 py-2 bg-white rounded-full text-label-sm font-label-bold shadow-sm border border-slate-100 hover:border-primary transition-all text-secondary hover:text-primary">Where is my order?</button>
+<button class="whitespace-nowrap px-4 py-2 bg-white rounded-full text-label-sm font-label-bold shadow-sm border border-slate-100 hover:border-primary transition-all text-secondary hover:text-primary">Recommend products</button>
+<button class="whitespace-nowrap px-4 py-2 bg-white rounded-full text-label-sm font-label-bold shadow-sm border border-slate-100 hover:border-primary transition-all text-secondary hover:text-primary">Help me choose</button>
+<button class="whitespace-nowrap px-4 py-2 bg-white rounded-full text-label-sm font-label-bold shadow-sm border border-slate-100 hover:border-primary transition-all text-secondary hover:text-primary">Returns &amp; Refunds</button>
+</div>
+<!-- Main Input -->
+<div class="relative group">
+<div class="absolute inset-0 bg-primary/5 rounded-2xl blur-xl group-focus-within:bg-primary/10 transition-all"></div>
+<div class="relative bg-white rounded-2xl shadow-xl shadow-slate-200/50 flex items-center p-2 border border-slate-100 group-focus-within:border-primary/30 transition-all">
+<button class="p-3 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="attach_file">attach_file</span>
+</button>
+<input class="flex-1 bg-transparent border-none focus:ring-0 text-body-md px-2 placeholder:text-slate-400" placeholder="Ask AIDEP anything..." type="text"/>
+<button class="p-3 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="mic">mic</span>
+</button>
+<button class="bg-primary hover:bg-primary-container text-white w-12 h-12 rounded-xl flex items-center justify-center transition-all active:scale-95 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined" data-icon="send">send</span>
+</button>
+</div>
+</div>
+<p class="text-[11px] text-center mt-4 text-slate-400 font-medium">AIDEP AI may provide inaccurate info. Verification recommended.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer (Conditional suppression logic applied: Chat interface hides traditional footer for focus) -->
+</body></html>

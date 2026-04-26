@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AIDEP Admin Governance Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary": "#a04100",
+                    "surface-container-high": "#e2e8f8",
+                    "on-tertiary": "#ffffff",
+                    "surface-variant": "#dce2f3",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#474646",
+                    "outline": "#8e7164",
+                    "inverse-on-surface": "#ebf1ff",
+                    "on-surface": "#151c27",
+                    "tertiary-fixed": "#dae1ff",
+                    "surface-dim": "#d3daea",
+                    "on-primary": "#ffffff",
+                    "inverse-surface": "#2a313d",
+                    "inverse-primary": "#ffb693",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed-dim": "#b3c5ff",
+                    "on-primary-fixed": "#351000",
+                    "secondary-container": "#e5e2e1",
+                    "tertiary": "#0054d6",
+                    "error-container": "#ffdad6",
+                    "surface-container-highest": "#dce2f3",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "primary-fixed-dim": "#ffb693",
+                    "secondary": "#5f5e5e",
+                    "surface-container": "#e7eefe",
+                    "on-tertiary-fixed": "#001849",
+                    "on-surface-variant": "#5a4136",
+                    "on-error": "#ffffff",
+                    "background": "#f9f9ff",
+                    "on-tertiary-fixed-variant": "#003fa4",
+                    "on-secondary-container": "#656464",
+                    "tertiary-container": "#6c94ff",
+                    "on-primary-fixed-variant": "#7a3000",
+                    "on-background": "#151c27",
+                    "surface-bright": "#f9f9ff",
+                    "surface": "#f9f9ff",
+                    "on-secondary": "#ffffff",
+                    "surface-container-low": "#f0f3ff",
+                    "primary-fixed": "#ffdbcc",
+                    "on-secondary-fixed": "#1c1b1b",
+                    "outline-variant": "#e2bfb0",
+                    "secondary-fixed": "#e5e2e1",
+                    "primary-container": "#ff6b00",
+                    "surface-tint": "#a04100",
+                    "on-tertiary-container": "#002b76",
+                    "on-primary-container": "#572000",
+                    "on-error-container": "#93000a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.5rem",
+                    "lg": "1rem",
+                    "xl": "1.5rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "display": ["Plus Jakarta Sans"],
+                    "body": ["Plus Jakarta Sans"],
+                    "label": ["Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-panel { backdrop-filter: blur(12px); background-color: rgba(255, 255, 255, 0.8); }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-full w-64 border-r fixed left-0 top-0 z-50 bg-[#f9f9ff] dark:bg-[#151c27] border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-none py-6 space-y-2">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+</div>
+<div>
+<h1 class="text-lg font-black text-[#a04100] tracking-tight">Governance</h1>
+<p class="text-[10px] uppercase tracking-widest text-slate-400 font-bold">Platform Oversight</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-transform duration-200 hover:translate-x-1 font-['Plus_Jakarta_Sans'] text-sm font-semibold" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                Overview
+            </a>
+<a class="bg-orange-50 dark:bg-orange-900/20 text-[#a04100] dark:text-orange-400 border-r-4 border-[#a04100] flex items-center gap-3 px-4 py-3 rounded-r-lg font-['Plus_Jakarta_Sans'] text-sm font-semibold transition-transform duration-200 translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+                User Roles
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-transform duration-200 hover:translate-x-1 font-['Plus_Jakarta_Sans'] text-sm font-semibold" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+                Customers
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-transform duration-200 hover:translate-x-1 font-['Plus_Jakarta_Sans'] text-sm font-semibold" href="#">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+                Merchants
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-transform duration-200 hover:translate-x-1 font-['Plus_Jakarta_Sans'] text-sm font-semibold" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+                Audit Logs
+            </a>
+</nav>
+<div class="mt-auto px-4 space-y-1">
+<button class="w-full bg-primary text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 mb-4 hover:bg-primary-container transition-colors shadow-lg shadow-orange-200/50 active:scale-95">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                Quick Action
+            </button>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 font-['Plus_Jakarta_Sans'] text-sm font-semibold" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+                Support
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 font-['Plus_Jakarta_Sans'] text-sm font-semibold" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                System Settings
+            </a>
+</div>
+</aside>
+<!-- TopAppBar -->
+<header class="md:ml-64 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 docked full-width top-0 sticky z-40 h-16 flex justify-between items-center w-full px-6">
+<div class="flex items-center gap-4">
+<span class="text-xl font-extrabold text-[#a04100] dark:text-[#ff6b00] tracking-tight font-['Plus_Jakarta_Sans']">Vibrant Admin</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg" data-icon="search">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-slate-100 border-none rounded-full text-sm w-64 focus:ring-2 focus:ring-primary/20" placeholder="Search governance logs..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 text-slate-500 hover:bg-slate-50 rounded-full transition-all duration-200 cursor-pointer active:scale-95">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-slate-50 rounded-full transition-all duration-200 cursor-pointer active:scale-95">
+<span class="material-symbols-outlined" data-icon="manage_accounts">manage_accounts</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-slate-200 ring-2 ring-orange-100">
+<img alt="Administrator Avatar" class="w-full h-full object-cover" data-alt="professional portrait of a senior system administrator in a modern office setting, clean lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhpuPIsryOPHdjibiEVdQ5pH9RQvkzBvmmzEZVbs_jhxXxV_InPy2Aie-PwSj3oXiQPtE5cKiUxgU27xsU7y18rOM2gJEUIuf6pnoiPOgOn2UBINQQ8Y1Uk36APzg_OodAappYCqXOpNTTYWQyUwErcLxly8BVlGfqiSONE9ScXorZVowxPq-Vj8VvdBGsTTEPbnU6hVp5EuZScc7mkN5nHI-4dzJGEr0o6JET8sfiyZFiQDNUCfaD_vhGDoGfE401q_V4t3_RoxkW"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="md:ml-64 p-6 lg:p-8">
+<div class="grid grid-cols-1 xl:grid-cols-4 gap-8">
+<!-- Dashboard Canvas -->
+<div class="xl:col-span-3 space-y-8">
+<!-- Page Header -->
+<div class="flex flex-col gap-1">
+<h2 class="text-3xl font-extrabold text-on-surface tracking-tight">Governance Dashboard</h2>
+<p class="text-slate-500 font-medium">Monitoring platform integrity and user ecosystem health.</p>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-primary bg-orange-50 p-2 rounded-lg" data-icon="group">group</span>
+<span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">+12%</span>
+</div>
+<div>
+<p class="text-sm font-semibold text-slate-500">Total Customers</p>
+<h3 class="text-2xl font-bold text-on-surface">12,842</h3>
+</div>
+</div>
+<div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-tertiary bg-blue-50 p-2 rounded-lg" data-icon="storefront">storefront</span>
+<span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">+5.2%</span>
+</div>
+<div>
+<p class="text-sm font-semibold text-slate-500">Total Merchants</p>
+<h3 class="text-2xl font-bold text-on-surface">1,420</h3>
+</div>
+</div>
+<div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-orange-600 bg-orange-50 p-2 rounded-lg" data-icon="pending_actions" style="font-variation-settings: 'FILL' 1;">pending_actions</span>
+<span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-0.5 rounded-full">High Priority</span>
+</div>
+<div>
+<p class="text-sm font-semibold text-slate-500">Pending Approvals</p>
+<h3 class="text-2xl font-bold text-on-surface">48</h3>
+</div>
+</div>
+<div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-green-600 bg-green-50 p-2 rounded-lg" data-icon="verified_user">verified_user</span>
+<span class="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">Stable</span>
+</div>
+<div>
+<p class="text-sm font-semibold text-slate-500">System Trust Score</p>
+<h3 class="text-2xl font-bold text-on-surface">98.4%</h3>
+</div>
+</div>
+</div>
+<!-- Pending Merchant Applications -->
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<div>
+<h3 class="text-xl font-bold text-on-surface">Pending Merchant Applications</h3>
+<p class="text-sm text-slate-500 font-medium">Verify legal entities before onboarding.</p>
+</div>
+<button class="text-primary text-sm font-bold flex items-center gap-1 hover:underline">View All <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span></button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-white p-5 rounded-xl border border-slate-100 flex items-center gap-4 hover:shadow-md transition-shadow">
+<div class="w-14 h-14 rounded-xl bg-slate-100 overflow-hidden shrink-0">
+<img alt="Merchant Logo" class="w-full h-full object-cover" data-alt="minimalist storefront logo with warm wooden textures and modern typography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqQTygftjGQThLcJKkdnpyXdgX92hKnHS7CXbNlTMszp4FyowE67Z7y0ZAFq0-DwNgCrsNnCuGw3tNPONd5fxvAOgjFpC9uL4VNr3c21xcMe_ugn3DKDpr5GU2fOkYv_wCaxUxw2_lnC-vRODegf3lJeE9g5hKDkiE3x5UoovRQtAuG-pGbuPaqiICCRXPJO_NhyGhFoIBg_IspIsIGBfIEIQvl8HcpWWbRSwNTo5tJZMa6TebxE0ZnYe59BfMO0z75a8RS2sLthoh"/>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-bold text-on-surface truncate">Artisan Bloom Boutique</h4>
+<p class="text-xs text-slate-500">Submitted 2h ago • LLC Certified</p>
+</div>
+<button class="px-4 py-2 bg-secondary-container text-on-secondary-container rounded-lg text-sm font-bold hover:bg-slate-300 transition-colors active:scale-95">Review</button>
+</div>
+<div class="bg-white p-5 rounded-xl border border-slate-100 flex items-center gap-4 hover:shadow-md transition-shadow">
+<div class="w-14 h-14 rounded-xl bg-slate-100 overflow-hidden shrink-0">
+<img alt="Merchant Logo" class="w-full h-full object-cover" data-alt="tech startup brand logo with vibrant geometric shapes and bright orange accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-TMGptlbvDlmbE1quuTxhJi7rL_k2_Nbn7WyH0ZvgxH-CG3kE2OI-oplcThRfCTtNBdR7RooBVWyvY845fCGeOvC92Bza4mfrqVKA7GzdF2oHias_Hb6bCSE9DW-f8KXpPrC97WANc8Z90r-cDb0NMNvDKz23-LITRfsrBD9Ut0YmbWhgRqrdj4goFS2-Fvn7gNcycr0VB8CXvaK78lhqhGDtRck4VKwxL5JRfsc2Ip01Sd8Dzp7sO4f_Q8LYHwX_Qc98m1yZ0ghG"/>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-bold text-on-surface truncate">NexGen Tech Supplies</h4>
+<p class="text-xs text-slate-500">Submitted 5h ago • VAT Verified</p>
+</div>
+<button class="px-4 py-2 bg-secondary-container text-on-secondary-container rounded-lg text-sm font-bold hover:bg-slate-300 transition-colors active:scale-95">Review</button>
+</div>
+</div>
+</div>
+<!-- Customer Management Table -->
+<div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+<div class="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+<h3 class="font-bold text-lg text-on-surface">Recent User Activity</h3>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-white rounded-lg border border-transparent hover:border-slate-200 transition-all">
+<span class="material-symbols-outlined text-slate-500" data-icon="filter_list">filter_list</span>
+</button>
+<button class="p-2 hover:bg-white rounded-lg border border-transparent hover:border-slate-200 transition-all">
+<span class="material-symbols-outlined text-slate-500" data-icon="download">download</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="text-[11px] uppercase tracking-wider text-slate-400 font-bold bg-slate-50/50">
+<th class="px-6 py-4">Customer</th>
+<th class="px-6 py-4">User Role</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4">Account Type</th>
+<th class="px-6 py-4 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 text-sm">
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-600 text-xs">SK</div>
+<div>
+<p class="font-bold text-on-surface">Sarah Kinsley</p>
+<p class="text-xs text-slate-400">sarah.k@example.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-slate-100 text-slate-600 rounded-md text-[11px] font-bold">Standard User</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5 text-green-600 font-bold">
+<div class="w-2 h-2 rounded-full bg-green-500"></div>
+                                            Active
+                                        </div>
+</td>
+<td class="px-6 py-4 text-slate-500">Premium Subscription</td>
+<td class="px-6 py-4 text-right">
+<button class="p-1 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-600 text-xs">MJ</div>
+<div>
+<p class="font-bold text-on-surface">Marcus Jensen</p>
+<p class="text-xs text-slate-400">m.jensen@service.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-blue-50 text-blue-600 rounded-md text-[11px] font-bold">Support Lead</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5 text-green-600 font-bold">
+<div class="w-2 h-2 rounded-full bg-green-500"></div>
+                                            Active
+                                        </div>
+</td>
+<td class="px-6 py-4 text-slate-500">Internal Staff</td>
+<td class="px-6 py-4 text-right">
+<button class="p-1 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-600 text-xs">EL</div>
+<div>
+<p class="font-bold text-on-surface">Elena Lopez</p>
+<p class="text-xs text-slate-400">elena.l@global.net</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-slate-100 text-slate-600 rounded-md text-[11px] font-bold">Standard User</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5 text-orange-600 font-bold">
+<div class="w-2 h-2 rounded-full bg-orange-500"></div>
+                                            Flagged
+                                        </div>
+</td>
+<td class="px-6 py-4 text-slate-500">Free Tier</td>
+<td class="px-6 py-4 text-right">
+<button class="p-1 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Side Panel Admin Actions -->
+<div class="xl:col-span-1 space-y-6">
+<div class="bg-white rounded-xl shadow-lg border border-slate-100 p-6 sticky top-24">
+<div class="flex items-center gap-3 mb-8 border-b border-slate-50 pb-4">
+<span class="material-symbols-outlined text-primary" data-icon="bolt">bolt</span>
+<h3 class="text-lg font-extrabold text-on-surface tracking-tight">Admin Actions</h3>
+</div>
+<div class="space-y-8">
+<!-- Quick Approvals Section -->
+<section class="space-y-4">
+<h4 class="text-xs font-black uppercase tracking-widest text-slate-400">Quick Approvals</h4>
+<div class="space-y-3">
+<div>
+<label class="block text-xs font-bold text-slate-500 mb-1">Merchant ID</label>
+<input class="w-full px-4 py-2.5 bg-slate-50 border-none rounded-lg text-sm focus:ring-2 focus:ring-primary/20 transition-all" placeholder="e.g. M-90821" type="text"/>
+</div>
+<div>
+<label class="block text-xs font-bold text-slate-500 mb-1">Approval Note</label>
+<textarea class="w-full px-4 py-2.5 bg-slate-50 border-none rounded-lg text-sm focus:ring-2 focus:ring-primary/20 transition-all resize-none" placeholder="Reason for approval..." rows="3"></textarea>
+</div>
+<button class="w-full bg-primary text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-primary-container transition-all shadow-md active:scale-95">
+<span class="material-symbols-outlined text-lg" data-icon="how_to_reg">how_to_reg</span>
+                                    Approve Merchant
+                                </button>
+</div>
+</section>
+<!-- System Settings Section -->
+<section class="space-y-4">
+<h4 class="text-xs font-black uppercase tracking-widest text-slate-400">System Settings</h4>
+<div class="space-y-2">
+<button class="w-full flex items-center justify-between p-3 bg-slate-50 rounded-lg group hover:bg-orange-50 transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary" data-icon="manage_accounts">manage_accounts</span>
+<span class="text-sm font-bold text-on-surface">Role Assignments</span>
+</div>
+<span class="material-symbols-outlined text-slate-300 text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-3 bg-slate-50 rounded-lg group hover:bg-orange-50 transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary" data-icon="payments">payments</span>
+<span class="text-sm font-bold text-on-surface">Platform Fees</span>
+</div>
+<span class="material-symbols-outlined text-slate-300 text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-3 bg-slate-50 rounded-lg group hover:bg-orange-50 transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary" data-icon="security_update_good">security_update_good</span>
+<span class="text-sm font-bold text-on-surface">Security Protocols</span>
+</div>
+<span class="material-symbols-outlined text-slate-300 text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</section>
+<!-- System Status Indicator -->
+<div class="pt-4 mt-4 border-t border-slate-50">
+<div class="flex items-center gap-2 text-xs font-bold text-green-600">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+</span>
+                                System Live &amp; Optimized
+                            </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual FAB (Hidden on governance screens but prepared) -->
+<div class="fixed bottom-8 right-8 z-50 md:hidden">
+<button class="w-14 h-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+</body></html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AIDEP | Secure Access</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-fixed": "#ffdbcc",
+                      "inverse-on-surface": "#ebf1ff",
+                      "secondary-fixed-dim": "#c8c6c5",
+                      "on-surface-variant": "#5a4136",
+                      "inverse-surface": "#2a313d",
+                      "on-primary-fixed": "#351000",
+                      "on-error-container": "#93000a",
+                      "primary-container": "#ff6b00",
+                      "on-surface": "#151c27",
+                      "on-primary-container": "#572000",
+                      "on-primary": "#ffffff",
+                      "on-tertiary-fixed": "#001849",
+                      "on-tertiary-container": "#002b76",
+                      "surface": "#f9f9ff",
+                      "error-container": "#ffdad6",
+                      "tertiary-fixed": "#dae1ff",
+                      "surface-container-highest": "#dce2f3",
+                      "on-secondary-fixed-variant": "#474646",
+                      "on-background": "#151c27",
+                      "on-tertiary-fixed-variant": "#003fa4",
+                      "surface-tint": "#a04100",
+                      "tertiary-container": "#6c94ff",
+                      "tertiary": "#0054d6",
+                      "outline-variant": "#e2bfb0",
+                      "surface-variant": "#dce2f3",
+                      "surface-dim": "#d3daea",
+                      "outline": "#8e7164",
+                      "error": "#ba1a1a",
+                      "primary-fixed-dim": "#ffb693",
+                      "on-primary-fixed-variant": "#7a3000",
+                      "on-secondary-container": "#656464",
+                      "surface-bright": "#f9f9ff",
+                      "surface-container": "#e7eefe",
+                      "surface-container-low": "#f0f3ff",
+                      "inverse-primary": "#ffb693",
+                      "primary": "#a04100",
+                      "on-error": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary": "#5f5e5e",
+                      "surface-container-high": "#e2e8f8",
+                      "secondary-fixed": "#e5e2e1",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-fixed": "#1c1b1b",
+                      "background": "#f9f9ff",
+                      "secondary-container": "#e5e2e1",
+                      "tertiary-fixed-dim": "#b3c5ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "xl": "80px",
+                      "md": "24px",
+                      "xs": "4px",
+                      "lg": "48px",
+                      "gutter": "24px",
+                      "margin": "32px",
+                      "sm": "12px"
+              },
+              "fontFamily": {
+                      "label-bold": ["Plus Jakarta Sans"],
+                      "label-sm": ["Plus Jakarta Sans"],
+                      "body-md": ["Plus Jakarta Sans"],
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "body-lg": ["Plus Jakarta Sans"],
+                      "headline-xl": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "label-bold": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                      "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "headline-xl": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.25", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .ambient-shadow { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.04), 0 8px 10px -6px rgba(0, 0, 0, 0.04); }
+        .primary-glow:hover { box-shadow: 0 0 20px rgba(255, 107, 0, 0.2); }
+    </style>
+</head>
+<body class="bg-surface-container-lowest min-h-screen flex flex-col">
+<header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md fixed top-0 w-full z-50 border-b border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto w-full">
+<div class="text-2xl font-black tracking-tight text-orange-600 dark:text-orange-500 font-['Plus_Jakarta_Sans']">AIDEP</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-slate-600 dark:text-slate-400 hover:text-orange-500 font-['Plus_Jakarta_Sans'] text-sm font-medium transition-colors duration-200" href="#">Shop</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-orange-500 font-['Plus_Jakarta_Sans'] text-sm font-medium transition-colors duration-200" href="#">Deals</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-orange-500 font-['Plus_Jakarta_Sans'] text-sm font-medium transition-colors duration-200" href="#">Support</a>
+<button class="bg-primary-container text-on-primary px-6 py-2.5 rounded-full font-label-bold text-label-bold active:scale-95 transition-transform primary-glow">Join Now</button>
+</div>
+</div>
+</header>
+<main class="flex-grow pt-32 pb-20 px-6">
+<div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+<div class="hidden lg:block relative group">
+<div class="absolute -inset-4 bg-primary-fixed opacity-20 blur-3xl rounded-full"></div>
+<div class="relative rounded-[32px] overflow-hidden ambient-shadow">
+<img class="w-full h-[600px] object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Modern lifestyle retail experience with a young professional smiling while using a mobile phone in a bright high-end shopping mall" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsS-zT87l1V8PQY7JPySPLhcVpm_Q8mcgNpMm9PEBHBcv8961gEXNm_3e3okPdWxc7mk-XV5sqXaOTQi7kXerhZkCtxhwMWf1R9LDLdYRy-coaUXoauh_MH_9-kPM60DuwpQXyAY4VeQv4WTGKyrE-u3GnfHNCj9RDomKEZuAYto5qaaexn10u5kNZVoL_kr_UaLucOZyHBbMdTCFxMHtoyTYVKXdM5bWjEJCFLLf9A5LnfLXdPv7TpMN7FlglUQrWhZcRZP90t-Lk"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex flex-col justify-end p-12">
+<h2 class="font-headline-lg text-headline-lg text-white mb-4">Elevate Your Commerce Journey</h2>
+<p class="font-body-md text-body-md text-white/80 max-w-md">Join thousands of merchants and millions of shoppers in the world's most vibrant digital marketplace.</p>
+</div>
+</div>
+</div>
+<div class="w-full max-w-md mx-auto">
+<div class="mb-10 text-center lg:text-left">
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-2">Welcome Back</h1>
+<p class="font-body-md text-body-md text-secondary">Securely access your AIDEP account</p>
+</div>
+<div class="flex gap-4 p-1 bg-surface-container-low rounded-xl mb-8">
+<button class="flex-1 py-3 px-4 rounded-lg bg-white shadow-sm font-label-bold text-label-bold text-on-surface">Login</button>
+<button class="flex-1 py-3 px-4 rounded-lg text-secondary font-label-bold text-label-bold hover:bg-white/50 transition-colors">Register</button>
+</div>
+<div class="space-y-6">
+<div class="grid grid-cols-2 gap-4 mb-8">
+<button class="flex items-center justify-center gap-3 py-3 px-4 border-1.5 border-outline-variant rounded-xl font-label-bold text-label-bold text-on-surface hover:bg-surface-variant transition-colors group">
+<span class="material-symbols-outlined text-xl" data-icon="person">person</span>
+                            Customer
+                        </button>
+<button class="flex items-center justify-center gap-3 py-3 px-4 border-1.5 border-outline-variant rounded-xl font-label-bold text-label-bold text-on-surface hover:bg-surface-variant transition-colors group">
+<span class="material-symbols-outlined text-xl" data-icon="storefront">storefront</span>
+                            Merchant
+                        </button>
+</div>
+<div class="space-y-4">
+<div class="relative group">
+<input class="w-full px-6 py-4 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-primary-container focus:bg-white transition-all outline-none font-body-md text-on-surface placeholder:text-slate-400" placeholder="Email Address" type="email"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-300 group-focus-within:text-primary-container" data-icon="mail">mail</span>
+</div>
+<div class="relative group">
+<input class="w-full px-6 py-4 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-primary-container focus:bg-white transition-all outline-none font-body-md text-on-surface placeholder:text-slate-400" placeholder="Password" type="password"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-300 group-focus-within:text-primary-container" data-icon="lock">lock</span>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="w-5 h-5 rounded-md border-slate-300 text-primary-container focus:ring-primary-container cursor-pointer" type="checkbox"/>
+<span class="font-label-sm text-label-sm text-secondary group-hover:text-on-surface transition-colors">Remember me</span>
+</label>
+<a class="font-label-sm text-label-sm text-primary font-bold hover:underline" href="#">Forgot Password?</a>
+</div>
+<button class="w-full bg-primary-container text-on-primary py-4 rounded-xl font-label-bold text-label-bold active:scale-[0.98] transition-all primary-glow">
+                        Sign In to Account
+                    </button>
+<p class="text-center font-label-sm text-label-sm text-secondary mt-8">
+                        Don't have an account? <a class="text-primary font-bold hover:underline" href="#">Create an Account</a>
+</p>
+</div>
+</div>
+</div>
+</main>
+<footer class="w-full border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 mt-auto">
+<div class="max-w-7xl mx-auto px-8 py-12 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex flex-col items-center md:items-start gap-2">
+<div class="text-lg font-bold text-slate-900 dark:text-slate-100 font-['Plus_Jakarta_Sans']">AIDEP</div>
+<p class="font-['Plus_Jakarta_Sans'] text-xs leading-relaxed text-slate-500 dark:text-slate-400">© 2024 AIDEP E-commerce. All rights reserved.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="text-slate-500 dark:text-slate-400 hover:text-orange-500 font-['Plus_Jakarta_Sans'] text-xs hover:underline transition-all cursor-pointer" href="#">Privacy Policy</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-orange-500 font-['Plus_Jakarta_Sans'] text-xs hover:underline transition-all cursor-pointer" href="#">Terms of Service</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-orange-500 font-['Plus_Jakarta_Sans'] text-xs hover:underline transition-all cursor-pointer" href="#">Shipping Info</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-orange-500 font-['Plus_Jakarta_Sans'] text-xs hover:underline transition-all cursor-pointer" href="#">Returns</a>
+</div>
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-slate-400 cursor-pointer hover:text-orange-500 transition-colors">
+<span class="material-symbols-outlined" data-icon="public">public</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-slate-400 cursor-pointer hover:text-orange-500 transition-colors">
+<span class="material-symbols-outlined" data-icon="lock_reset">lock_reset</span>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
