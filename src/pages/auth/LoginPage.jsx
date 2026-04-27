@@ -11,14 +11,14 @@ export default function LoginPage() {
         <img src={authImage} alt="Modern retail access experience" />
         <div>
           <h2>Elevate Your Commerce Journey</h2>
-          <p>Secure access for shoppers, merchants, and administrators.</p>
+          <p>Secure access for shoppers and merchants.</p>
         </div>
       </div>
       <div className="auth-copy">
         <span className="eyebrow">Secure access</span>
         <h1 className="title-lg">Welcome Back</h1>
         <p className="muted">Welcome back. Sign in to continue.</p>
-        <AuthForm mode="login" />
+        <AuthForm mode="login" allowedRoles={["customer", "merchant"]} />
         <p className="auth-switch">Need an account? <Link to="/register">Create one</Link></p>
       </div>
     </section>

@@ -37,6 +37,29 @@ def login_required(view):
     return wrapped
 
 
+def load_optional_user():
+    token = _bearer_token()
+    g.current_user = None
+    if not token:
+        return None
+
+    try:
+        payload = decode_access_token(token)
+        g.current_user = get_user_by_id(payload["sub"])
+    except (jwt.ExpiredSignatureError, jwt.InvalidTokenError, AuthError):
+        g.current_user = None
+    return g.current_user
+
+
+def optional_auth(view):
+    @wraps(view)
+    def wrapped(*args, **kwargs):
+        load_optional_user()
+        return view(*args, **kwargs)
+
+    return wrapped
+
+
 def roles_required(*roles):
     allowed_roles = set(roles)
 

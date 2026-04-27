@@ -7,7 +7,7 @@ export default function MessageBubble({ message }) {
   return (
     <div className={`message-row ${isUser ? "is-user" : ""}`}>
       <div className="message-avatar">
-        <Icon name={isUser ? "person" : "smart_toy"} size={20} />
+        <Icon name={isUser ? "person" : "support_agent"} size={20} />
       </div>
       <div className="message-content">
         <div className="message-bubble">{message.content}</div>

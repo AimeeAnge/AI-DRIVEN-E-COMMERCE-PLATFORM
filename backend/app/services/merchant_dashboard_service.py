@@ -4,6 +4,7 @@ import psycopg
 from flask import current_app
 from psycopg.rows import dict_row
 
+from ..utils.cart_validators import ValidationError, validate_uuid
 from ..utils.pagination import pagination_meta
 
 
@@ -49,6 +50,23 @@ def _date_filters(args, column="o.created_at"):
         filters.append(f"{column} <= %s")
         values.append(args.get("date_to"))
     return filters, values
+
+
+ORDER_STATUS_TRANSITIONS = {
+    "pending": {"processing", "cancelled"},
+    "processing": {"shipped", "cancelled"},
+    "shipped": {"delivered"},
+    "delivered": set(),
+    "cancelled": set(),
+}
+
+
+def _validate_order_status(status):
+    status = (status or "").strip().lower()
+    allowed_statuses = {"processing", "shipped", "delivered", "cancelled"}
+    if status not in allowed_statuses:
+        raise MerchantDashboardError("Order status is not supported.", code="invalid_order_status")
+    return status
 
 
 def get_merchant_analytics(merchant_id, args):
@@ -172,8 +190,8 @@ def get_merchant_orders(merchant_id, page, page_size, offset):
 
                 cursor.execute(
                     """
-                    SELECT DISTINCT o.id, o.order_number, o.status, o.created_at,
-                           u.id AS customer_id, u.full_name, u.email
+                    SELECT DISTINCT o.id, o.order_number, o.status, o.currency_code, o.created_at,
+                           u.full_name
                     FROM orders o
                     JOIN order_items oi ON oi.order_id = o.id
                     JOIN users u ON u.id = o.user_id
@@ -233,10 +251,9 @@ def get_merchant_orders(merchant_id, page, page_size, offset):
                 "order_id": str(order["id"]),
                 "order_number": order["order_number"],
                 "order_status": order["status"],
+                "currency_code": order["currency_code"],
                 "customer": {
-                    "id": str(order["customer_id"]),
                     "full_name": order.get("full_name"),
-                    "email": order["email"],
                 },
                 "items": order_items,
                 "merchant_total": _amount(merchant_total),
@@ -247,4 +264,76 @@ def get_merchant_orders(merchant_id, page, page_size, offset):
     return {
         "items": items,
         "pagination": pagination_meta(page, page_size, total),
+    }
+
+
+def update_merchant_order_status(merchant_id, order_id, payload):
+    try:
+        order_id = validate_uuid(order_id, "order_id")
+        next_status = _validate_order_status(payload.get("status"))
+    except ValidationError as exc:
+        raise MerchantDashboardError(exc.message, code=exc.code, data=exc.data) from exc
+
+    try:
+        with _connect() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    """
+                    SELECT o.id, o.status
+                    FROM orders o
+                    WHERE o.id = %s
+                      AND EXISTS (
+                          SELECT 1
+                          FROM order_items oi
+                          WHERE oi.order_id = o.id
+                            AND oi.merchant_id = %s
+                      )
+                    FOR UPDATE
+                    """,
+                    (order_id, merchant_id),
+                )
+                order = cursor.fetchone()
+                if not order:
+                    raise MerchantDashboardError("Order was not found.", code="order_not_found", status_code=404)
+
+                current_status = order["status"]
+                allowed_next = ORDER_STATUS_TRANSITIONS.get(current_status, set())
+                if next_status not in allowed_next:
+                    raise MerchantDashboardError(
+                        f"Order cannot move from {current_status} to {next_status}.",
+                        code="invalid_order_transition",
+                        status_code=409,
+                        data={"current_status": current_status, "requested_status": next_status},
+                    )
+
+                cursor.execute(
+                    """
+                    UPDATE orders
+                    SET status = %s
+                    WHERE id = %s
+                    RETURNING id, status, updated_at
+                    """,
+                    (next_status, order_id),
+                )
+                updated = cursor.fetchone()
+    except MerchantDashboardError:
+        raise
+    except psycopg.errors.UndefinedTable as exc:
+        raise MerchantDashboardError(
+            "Merchant orders setup is incomplete. Import backend/schema.sql into PostgreSQL.",
+            code="database_schema_missing",
+            status_code=503,
+        ) from exc
+    except psycopg.Error as exc:
+        current_app.logger.exception("Merchant order status update failed: %s", exc)
+        raise MerchantDashboardError(
+            "We could not update this order right now. Please try again later.",
+            code="merchant_order_status_failed",
+            status_code=503,
+        ) from exc
+
+    return {
+        "order_id": str(updated["id"]),
+        "status": updated["status"],
+        "updated_at": _iso(updated.get("updated_at")),
     }

@@ -2,7 +2,7 @@ import React from "react";
 import { formatCurrency } from "../../utils/formatters";
 import Icon from "../common/Icon";
 
-export default function ProductSummary({ product, onAddToCart }) {
+export default function ProductSummary({ product, onAddToCart, onWishlistToggle, isWishlisted = false }) {
   const id = product?.id || product?._id || product?.slug;
 
   return (
@@ -16,9 +16,9 @@ export default function ProductSummary({ product, onAddToCart }) {
           <Icon name="shopping_bag" />
           Add to Cart
         </button>
-        <button className="secondary-button" type="button">
-          <Icon name="favorite" />
-          Wishlist
+        <button className="secondary-button" type="button" onClick={() => onWishlistToggle?.(product)}>
+          <Icon name="favorite" filled={isWishlisted} />
+          {isWishlisted ? "Saved" : "Wishlist"}
         </button>
       </div>
       <div className="soft-panel product-summary__promise">

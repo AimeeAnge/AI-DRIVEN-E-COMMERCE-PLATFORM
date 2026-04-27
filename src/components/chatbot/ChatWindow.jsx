@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useChatbot } from "../../context/ChatbotContext";
 import { chatbotService } from "../../services/chatbotService";
+import { friendlyApiError } from "../../utils/apiErrors";
 import Icon from "../common/Icon";
 import MessageBubble from "./MessageBubble";
 
@@ -9,6 +10,21 @@ const starterPrompts = [
   "What products do you recommend?",
   "How can I track my order?"
 ];
+
+const technicalTerms = /\b(api|database|endpoint|metadata|rule_based|backend)\b/i;
+
+function friendlyAssistantText(content, prompt) {
+  const text = String(content || "").trim();
+  if (!text) return "";
+  if (!technicalTerms.test(text)) return text;
+  if (/track|order/i.test(prompt)) {
+    return "You can check your order status in your order history. I can also help you find the order page.";
+  }
+  if (/recommend|product|find/i.test(prompt)) {
+    return "I can help you find products and suggest items that match what you are looking for.";
+  }
+  return "I can help you find products, explore recommendations, and understand your shopping options.";
+}
 
 export default function ChatWindow() {
   const { messages, setMessages, loading, setLoading, error, setError } = useChatbot();
@@ -26,13 +42,21 @@ export default function ChatWindow() {
 
     try {
       const response = await chatbotService.sendMessage({ message: trimmed });
-      const content = response?.message || response?.reply || response?.content;
+      const assistantMessage = response?.data?.assistant_message || response?.assistant_message;
+      const content = friendlyAssistantText(assistantMessage?.message_text || response?.message || response?.reply || response?.content, trimmed);
       if (content) {
-        setMessages((current) => [...current, { id: crypto.randomUUID(), role: "assistant", content }]);
+        setMessages((current) => [
+          ...current,
+          {
+            id: assistantMessage?.id || crypto.randomUUID(),
+            role: "assistant",
+            content
+          }
+        ]);
       }
     } catch (chatError) {
       console.log(chatError);
-      setError(new Error("I'm not connected right now. Please try again later."));
+      setError(new Error(friendlyApiError(chatError, "I'm not connected right now. Please try again later.")));
     } finally {
       setLoading(false);
     }
@@ -50,13 +74,13 @@ export default function ChatWindow() {
           <strong>AIDEP Assistant</strong>
           <span>Personal shopping help</span>
         </div>
-        <Icon name="smart_toy" />
+        <Icon name="support_agent" />
       </header>
       <div className="chat-messages">
         {!messages.length ? (
           <div className="chat-empty">
             <Icon name="auto_awesome" size={32} />
-            <p>Ask a shopping question or try one of these starters.</p>
+            <p>I can help you find products, explore recommendations, and track your order.</p>
             <div className="starter-prompts">
               {starterPrompts.map((prompt) => (
                 <button key={prompt} type="button" onClick={() => sendMessage(prompt)}>
@@ -68,8 +92,8 @@ export default function ChatWindow() {
         ) : (
           messages.map((message) => <MessageBubble key={message.id} message={message} />)
         )}
-        {loading ? <div className="typing-indicator">Assistant is thinking...</div> : null}
-        {error ? <p className="chat-error" role="alert">I'm not connected right now. Please try again later.</p> : null}
+        {loading ? <div className="typing-indicator">Assistant is finding a helpful answer...</div> : null}
+        {error ? <p className="chat-error" role="alert">{error.message}</p> : null}
       </div>
       <form className="chat-input" onSubmit={handleSubmit}>
         <label className="sr-only" htmlFor="chat-message">Message</label>

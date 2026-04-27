@@ -40,9 +40,15 @@ def _iso(value):
 
 def _wishlist_item(row):
     primary_image = None
-    if row.get("image_url"):
+    image_endpoint = f"/api/v1/products/images/{row['image_id']}" if row.get("has_image_data") and row.get("image_id") else None
+    image_url = image_endpoint or row.get("image_url")
+    if image_url:
         primary_image = {
-            "image_url": row["image_url"],
+            "id": str(row["image_id"]) if row.get("image_id") else None,
+            "image_url": image_url,
+            "url": image_url,
+            "image_endpoint": image_endpoint,
+            "has_binary": bool(row.get("has_image_data")),
             "alt_text": row.get("alt_text"),
         }
 
@@ -70,11 +76,11 @@ def list_wishlist(user_id):
                     """
                     SELECT wi.id, wi.product_id, wi.created_at,
                            p.name, p.slug, p.price, p.currency_code, p.status,
-                           pi.image_url, pi.alt_text
+                           pi.id AS image_id, pi.image_url, pi.has_image_data, pi.alt_text
                     FROM wishlist_items wi
                     JOIN products p ON p.id = wi.product_id
                     LEFT JOIN LATERAL (
-                        SELECT image_url, alt_text
+                        SELECT id, image_url, image_data IS NOT NULL AS has_image_data, alt_text
                         FROM product_images
                         WHERE product_id = p.id
                         ORDER BY is_primary DESC, sort_order ASC, created_at ASC

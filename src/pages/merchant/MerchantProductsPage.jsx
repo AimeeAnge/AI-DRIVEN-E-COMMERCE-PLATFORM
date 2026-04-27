@@ -5,6 +5,7 @@ import StatusState from "../../components/common/StatusState";
 import TextField from "../../components/forms/TextField";
 import useApiResource from "../../hooks/useApiResource";
 import { useAuth } from "../../context/AuthContext";
+import { useToast } from "../../context/ToastContext.jsx";
 import { merchantService } from "../../services/merchantService";
 import { productService } from "../../services/productService";
 import { friendlyApiError } from "../../utils/apiErrors";
@@ -37,6 +38,7 @@ function productPayload(form) {
 
 export default function MerchantProductsPage() {
   const { role, token, loading: authLoading } = useAuth();
+  const { showToast } = useToast();
   const { data, loading, error, reload } = useApiResource(() => merchantService.products(), []);
   const { data: categoryData } = useApiResource(() => productService.categories(), []);
   const categories = asArray(categoryData);
@@ -61,10 +63,13 @@ export default function MerchantProductsPage() {
       await merchantService.createProduct(payload);
       form.reset();
       setFormStatus("Product created successfully.");
+      showToast("Product created successfully.");
       await reload();
     } catch (productError) {
       console.log(productError);
-      setFormError(friendlyApiError(productError, "We couldn't create the product right now. Please check the form and try again."));
+      const message = friendlyApiError(productError, "We couldn't create the product right now. Please check the form and try again.");
+      setFormError(message);
+      showToast(message, "error");
     } finally {
       setSaving(false);
     }
@@ -96,10 +101,10 @@ export default function MerchantProductsPage() {
 
       {showForm ? (
         <form className="product-form panel" onSubmit={handleCreateProduct}>
-          <div className="form-grid">
-            <TextField label="Product name" id="name" name="name" required />
+          <div className="form-grid product-form-grid">
+            <TextField label="Product name" id="name" name="name" required helper="Use a clear name customers can search for." />
             <TextField label="Price" id="price" name="price" type="number" min="0" step="0.01" required />
-            <TextField label="Currency" id="currency_code" name="currency_code" defaultValue="USD" maxLength={3} required />
+            <TextField label="Currency" id="currency_code" name="currency_code" defaultValue="USD" maxLength={3} required helper="Three-letter currency code." />
             <TextField label="Stock quantity" id="stock_quantity" name="stock_quantity" type="number" min="0" step="1" defaultValue="0" />
             <div className="field">
               <label htmlFor="status">Status</label>
@@ -120,12 +125,12 @@ export default function MerchantProductsPage() {
               </div>
             ) : null}
             <TextField label="Product image" id="image" name="image" type="file" accept="image/jpeg,image/png,image/webp" />
-            <TextField label="Description" id="description" name="description" as="textarea" />
+            <TextField label="Description" id="description" name="description" as="textarea" helper="Highlight key features, condition, and what is included." />
           </div>
           {formError ? <p className="form-error" role="alert">{formError}</p> : null}
           {formStatus ? <p className="form-status" role="status">{formStatus}</p> : null}
           <div className="form-actions">
-            <button className="primary-button" type="submit" disabled={saving}>
+            <button className="primary-button is-loading-aware" type="submit" disabled={saving} aria-busy={saving}>
               {saving ? "Creating..." : "Create Product"}
             </button>
             <button className="secondary-button" type="button" onClick={() => setShowForm(false)}>
@@ -143,7 +148,6 @@ export default function MerchantProductsPage() {
         emptyMessage="Your products will appear here when they're available."
         columns={[
           { key: "name", label: "Product" },
-          { key: "slug", label: "Slug" },
           { key: "price", label: "Price", render: (row) => formatCurrency(row.price, row.currency_code || "USD") },
           { key: "stock_quantity", label: "Stock" },
           { key: "status", label: "Status" }

@@ -3,6 +3,7 @@ import DashboardLayout from "../../layouts/DashboardLayout";
 import DataTable from "../../components/dashboard/DataTable";
 import useApiResource from "../../hooks/useApiResource";
 import { useAuth } from "../../context/AuthContext";
+import { useToast } from "../../context/ToastContext.jsx";
 import { analyticsService } from "../../services/analyticsService";
 import { friendlyApiError } from "../../utils/apiErrors";
 import { getEntityId } from "../../utils/entity";
@@ -32,6 +33,7 @@ function displayName(user) {
 
 export default function AdminUsersPage() {
   const { user } = useAuth();
+  const { showToast } = useToast();
   const { data, loading, error, reload } = useApiResource(() => analyticsService.users(), []);
   const [statusMessage, setStatusMessage] = useState("");
   const [statusError, setStatusError] = useState("");
@@ -47,10 +49,13 @@ export default function AdminUsersPage() {
     try {
       await analyticsService.updateUserStatus(targetUserId, nextStatus);
       setStatusMessage(`${displayName(targetUser)} is now ${statusLabels[nextStatus]}.`);
+      showToast(`${displayName(targetUser)} is now ${statusLabels[nextStatus]}.`);
       await reload();
     } catch (statusUpdateError) {
       console.log(statusUpdateError);
-      setStatusError(friendlyApiError(statusUpdateError, "We couldn't update this account right now. Please try again."));
+      const message = friendlyApiError(statusUpdateError, "We couldn't update this account right now. Please try again.");
+      setStatusError(message);
+      showToast(message, "error");
     } finally {
       setUpdatingUserId("");
     }

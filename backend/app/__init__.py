@@ -6,11 +6,14 @@ from .routes.admin_routes import admin_bp
 from .routes.auth_routes import auth_bp
 from .routes.cart_routes import cart_bp
 from .routes.category_routes import category_bp
+from .routes.chatbot_routes import chatbot_bp
+from .routes.event_routes import event_bp
 from .routes.health_routes import health_bp
 from .routes.merchant_dashboard_routes import merchant_dashboard_bp
 from .routes.merchant_product_routes import merchant_product_bp
 from .routes.order_routes import order_bp
 from .routes.product_routes import product_bp
+from .routes.recommendation_routes import recommendation_bp
 from .routes.wishlist_routes import wishlist_bp
 
 
@@ -28,6 +31,9 @@ def create_app(config_class=Config):
     app.register_blueprint(cart_bp, url_prefix="/api/v1/cart")
     app.register_blueprint(order_bp, url_prefix="/api/v1/orders")
     app.register_blueprint(wishlist_bp, url_prefix="/api/v1/wishlist")
+    app.register_blueprint(chatbot_bp, url_prefix="/api/v1/chatbot")
+    app.register_blueprint(event_bp, url_prefix="/api/v1/events")
+    app.register_blueprint(recommendation_bp, url_prefix="/api/v1/recommendations")
     app.register_blueprint(merchant_dashboard_bp, url_prefix="/api/v1/merchant")
     app.register_blueprint(admin_bp, url_prefix="/api/v1/admin")
 

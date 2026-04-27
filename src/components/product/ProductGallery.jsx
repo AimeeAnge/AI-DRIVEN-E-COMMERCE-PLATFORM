@@ -3,8 +3,8 @@ import { resolveImageUrl } from "../../utils/images";
 import Icon from "../common/Icon";
 
 export default function ProductGallery({ product }) {
-  const images = product?.images || (product?.imageUrl ? [{ url: product.imageUrl, alt: product.name }] : []);
-  const mainImage = resolveImageUrl(images[0]) || resolveImageUrl(product?.imageUrl) || product?.image;
+  const images = product?.images || (product?.primary_image ? [product.primary_image] : product?.imageUrl ? [{ url: product.imageUrl, alt: product.name }] : []);
+  const mainImage = resolveImageUrl(images[0]) || resolveImageUrl(product?.primary_image) || resolveImageUrl(product?.imageUrl) || product?.image;
 
   return (
     <div className="product-gallery">

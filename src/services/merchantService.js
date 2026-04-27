@@ -4,6 +4,9 @@ export const merchantService = {
   dashboard() {
     return apiClient.get("/api/v1/merchant/analytics");
   },
+  analytics(params = {}) {
+    return apiClient.get("/api/v1/merchant/analytics", { params });
+  },
   products(params = {}) {
     return apiClient.get("/api/v1/merchant/products", { params });
   },
@@ -18,5 +21,8 @@ export const merchantService = {
   },
   orders(params = {}) {
     return apiClient.get("/api/v1/merchant/orders", { params });
+  },
+  updateOrderStatus(orderId, status) {
+    return apiClient.patch(`/api/v1/merchant/orders/${orderId}/status`, { status });
   }
 };

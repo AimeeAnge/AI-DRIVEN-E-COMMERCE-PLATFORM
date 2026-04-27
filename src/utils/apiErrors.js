@@ -60,6 +60,9 @@ export function friendlyApiError(error, fallback = "Something went wrong. Please
     if (code === "permission_denied" && /cart|order|shop/i.test(error?.config?.url || "")) {
       return "Please use a customer account to shop.";
     }
+    if (code === "permission_denied" && /wishlist/i.test(error?.config?.url || "")) {
+      return "Please use a customer account to save products.";
+    }
     return message;
   }
   if (error?.status === 409 && /email|duplicate/i.test(backendMessage || error?.message || "")) {

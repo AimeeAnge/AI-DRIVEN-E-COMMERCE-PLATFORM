@@ -4,7 +4,7 @@ import { getEntityId } from "../../utils/entity";
 import StatusState from "../common/StatusState";
 import ProductCard from "./ProductCard";
 
-export default function ProductGrid({ products, loading, error, onRetry, onAddToCart }) {
+export default function ProductGrid({ products, loading, error, onRetry, onAddToCart, onProductClick, onWishlistToggle, savedProductIds, emptyMessage }) {
   if (loading) {
     return <StatusState type="loading" title="Loading products" message="We're finding the latest products for you." />;
   }
@@ -23,13 +23,20 @@ export default function ProductGrid({ products, loading, error, onRetry, onAddTo
 
   const items = asArray(products);
   if (!items.length) {
-    return <StatusState title="No products yet" message="New products will appear here as they become available." />;
+    return <StatusState title="No products available yet" message={emptyMessage || "New products will appear here as they become available."} />;
   }
 
   return (
     <div className="product-grid">
       {items.map((product, index) => (
-        <ProductCard key={getEntityId(product) || index} product={product} onAddToCart={onAddToCart} />
+        <ProductCard
+          key={getEntityId(product) || index}
+          product={product}
+          onAddToCart={onAddToCart}
+          onProductClick={onProductClick}
+          onWishlistToggle={onWishlistToggle}
+          isWishlisted={savedProductIds?.has(getEntityId(product))}
+        />
       ))}
     </div>
   );

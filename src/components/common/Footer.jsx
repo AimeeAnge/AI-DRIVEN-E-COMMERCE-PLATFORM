@@ -11,9 +11,9 @@ export default function Footer() {
         </div>
         <nav aria-label="Footer navigation">
           <Link to="/products">Products</Link>
-          <Link to="/checkout">Checkout</Link>
+          <Link to="/about">About</Link>
           <Link to="/merchant">Merchant</Link>
-          <Link to="/admin">Admin</Link>
+          <Link to="/admin-login">Admin Portal</Link>
         </nav>
       </div>
     </footer>

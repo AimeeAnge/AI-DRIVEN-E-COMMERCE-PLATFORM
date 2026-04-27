@@ -53,7 +53,7 @@ def _get_or_create_cart(cursor, user_id):
 def _primary_image_select():
     return """
         LEFT JOIN LATERAL (
-            SELECT image_url, alt_text
+            SELECT id, image_url, image_data IS NOT NULL AS has_image_data, alt_text
             FROM product_images
             WHERE product_id = p.id
             ORDER BY is_primary DESC, sort_order ASC, created_at ASC
@@ -67,7 +67,7 @@ def _fetch_cart_items(cursor, cart_id):
         f"""
         SELECT ci.id, ci.cart_id, ci.product_id, ci.quantity, ci.created_at, ci.updated_at,
                p.name, p.slug, p.price, p.currency_code, p.stock_quantity, p.status,
-               pi.image_url, pi.alt_text
+               pi.id AS image_id, pi.image_url, pi.has_image_data, pi.alt_text
         FROM cart_items ci
         JOIN products p ON p.id = ci.product_id
         {_primary_image_select()}
@@ -88,6 +88,8 @@ def _cart_response(cart, items):
         line_total = item["price"] * item["quantity"]
         subtotal += line_total
         item_count += item["quantity"]
+        image_endpoint = f"/api/v1/products/images/{item['image_id']}" if item.get("has_image_data") and item.get("image_id") else None
+        image_url = image_endpoint or item.get("image_url")
         response_items.append(
             {
                 "id": str(item["id"]),
@@ -102,10 +104,14 @@ def _cart_response(cart, items):
                     "stock_quantity": item["stock_quantity"],
                     "status": item["status"],
                     "primary_image": {
-                        "image_url": item.get("image_url"),
+                        "id": str(item["image_id"]) if item.get("image_id") else None,
+                        "image_url": image_url,
+                        "url": image_url,
+                        "image_endpoint": image_endpoint,
+                        "has_binary": bool(item.get("has_image_data")),
                         "alt_text": item.get("alt_text"),
                     }
-                    if item.get("image_url")
+                    if image_url
                     else None,
                 },
                 "line_total": _amount(line_total),

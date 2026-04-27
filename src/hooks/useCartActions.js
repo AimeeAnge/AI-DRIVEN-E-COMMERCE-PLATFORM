@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import { useRouter } from "../routes/router.jsx";
+import { useToast } from "../context/ToastContext.jsx";
+import { eventService } from "../services/eventService";
 import { friendlyApiError } from "../utils/apiErrors";
 
 const PENDING_CART_PRODUCT_KEY = "aidep.pendingCartProductId";
@@ -30,6 +32,7 @@ export default function useCartActions() {
   const { token, role } = useAuth();
   const { addToCart } = useCart();
   const { navigate } = useRouter();
+  const { showToast } = useToast();
   const [cartMessage, setCartMessage] = useState("");
   const [cartError, setCartError] = useState("");
   const [cartBusy, setCartBusy] = useState(false);
@@ -46,16 +49,26 @@ export default function useCartActions() {
     }
     if (role !== "customer") {
       setCartError("Please use a customer account to shop.");
+      showToast("Please use a customer account to shop.", "error");
       return;
     }
 
     setCartBusy(true);
     try {
       await addToCart(productId, quantity);
+      eventService.safelyTrack({
+        product_id: productId,
+        source_context: "cart",
+        event_type: "add_to_cart",
+        metadata: { quantity }
+      });
       setCartMessage("Added to your cart.");
+      showToast("Added to your cart.");
     } catch (cartActionError) {
       console.log(cartActionError);
-      setCartError(friendlyApiError(cartActionError, "We couldn't add this product to your cart right now."));
+      const message = friendlyApiError(cartActionError, "We couldn't add this product to your cart right now.");
+      setCartError(message);
+      showToast(message, "error");
     } finally {
       setCartBusy(false);
     }

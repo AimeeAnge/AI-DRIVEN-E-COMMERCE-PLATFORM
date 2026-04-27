@@ -17,7 +17,7 @@ export default function ChatbotWidget() {
         onClick={() => setIsOpen(!isOpen)}
       >
         <Icon name={isOpen ? "close" : "smart_toy"} />
-        <span>{isOpen ? "Close" : "Ask AI"}</span>
+        <span>{isOpen ? "Close" : "Get Help"}</span>
       </button>
     </div>
   );

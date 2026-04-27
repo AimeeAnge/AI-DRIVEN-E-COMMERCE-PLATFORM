@@ -2,14 +2,17 @@ import React, { useEffect, useMemo, useState } from "react";
 import { RouterContext, matchRoute } from "./router.jsx";
 import PublicLayout from "../layouts/PublicLayout";
 import HomePage from "../pages/public/HomePage";
+import AboutPage from "../pages/public/AboutPage";
 import ProductListPage from "../pages/public/ProductListPage";
 import ProductDetailsPage from "../pages/public/ProductDetailsPage";
 import CartPage from "../pages/public/CartPage";
 import CheckoutPage from "../pages/public/CheckoutPage";
 import CheckoutSuccessPage from "../pages/public/CheckoutSuccessPage";
 import LoginPage from "../pages/auth/LoginPage";
+import AdminLoginPage from "../pages/auth/AdminLoginPage";
 import RegisterPage from "../pages/auth/RegisterPage";
 import DashboardPage from "../pages/customer/DashboardPage";
+import OrderDetailsPage from "../pages/customer/OrderDetailsPage";
 import OrderHistoryPage from "../pages/customer/OrderHistoryPage";
 import WishlistPage from "../pages/customer/WishlistPage";
 import MerchantDashboardPage from "../pages/merchant/MerchantDashboardPage";
@@ -25,15 +28,18 @@ import { useAuth } from "../context/AuthContext.jsx";
 
 const routes = [
   { path: "/", component: HomePage, layout: PublicLayout },
+  { path: "/about", component: AboutPage, layout: PublicLayout },
   { path: "/products", component: ProductListPage, layout: PublicLayout },
   { path: "/products/:id", component: ProductDetailsPage, layout: PublicLayout },
   { path: "/cart", component: CartPage, layout: PublicLayout, roles: ["customer"] },
   { path: "/checkout", component: CheckoutPage, layout: PublicLayout, roles: ["customer"] },
   { path: "/checkout/success", component: CheckoutSuccessPage, layout: PublicLayout },
   { path: "/login", component: LoginPage, layout: PublicLayout },
+  { path: "/admin-login", component: AdminLoginPage, layout: PublicLayout },
   { path: "/register", component: RegisterPage, layout: PublicLayout },
   { path: "/dashboard", component: DashboardPage, roles: ["customer"] },
   { path: "/dashboard/orders", component: OrderHistoryPage, roles: ["customer"] },
+  { path: "/dashboard/orders/:id", component: OrderDetailsPage, roles: ["customer"] },
   { path: "/dashboard/wishlist", component: WishlistPage, roles: ["customer"] },
   { path: "/merchant", component: MerchantDashboardPage, roles: ["merchant"] },
   { path: "/merchant/products", component: MerchantProductsPage, roles: ["merchant"] },

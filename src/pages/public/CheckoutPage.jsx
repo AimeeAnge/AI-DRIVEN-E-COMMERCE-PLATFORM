@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CheckoutForm from "../../components/forms/CheckoutForm";
 import OrderSummary from "../../components/cart/OrderSummary";
 import PageHeader from "../../components/common/PageHeader";
@@ -8,6 +8,7 @@ import { friendlyApiError } from "../../utils/apiErrors";
 
 export default function CheckoutPage() {
   const { cart, loading, error, refreshCart } = useCart();
+  const [checkoutBusy, setCheckoutBusy] = useState(false);
   const items = cart?.items || [];
 
   useEffect(() => {
@@ -22,8 +23,8 @@ export default function CheckoutPage() {
       {!loading && !error && !items.length ? <StatusState title="Your cart is empty" message="Add products to your cart before checkout." /> : null}
       {items.length ? (
         <div className="checkout-layout">
-          <CheckoutForm />
-          <OrderSummary cart={cart} checkout />
+          <CheckoutForm onBusyChange={setCheckoutBusy} />
+          <OrderSummary cart={cart} checkout busy={checkoutBusy} />
         </div>
       ) : null}
     </div>

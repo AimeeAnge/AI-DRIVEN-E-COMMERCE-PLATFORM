@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useCart } from "../../context/CartContext";
+import { useToast } from "../../context/ToastContext.jsx";
 import { takeAuthNotice, takePendingCartProduct } from "../../hooks/useCartActions";
 import { useRouter } from "../../routes/router.jsx";
 import { friendlyApiError, roleMismatchMessage } from "../../utils/apiErrors";
@@ -13,19 +14,20 @@ function destinationForRole(nextRole) {
   return "/dashboard";
 }
 
-export default function AuthForm({ mode = "login" }) {
+export default function AuthForm({ mode = "login", allowedRoles }) {
   const { login, register, logout, loading, role, setRole } = useAuth();
   const { addToCart } = useCart();
+  const { showToast } = useToast();
   const { navigate } = useRouter();
   const [status, setStatus] = useState("");
   const [formError, setFormError] = useState("");
-  const roles = mode === "register" ? ["customer", "merchant"] : ["customer", "merchant", "admin"];
+  const roles = allowedRoles || (mode === "register" ? ["customer", "merchant"] : ["customer", "merchant"]);
 
   useEffect(() => {
-    if (mode === "register" && role === "admin") {
-      setRole("customer");
+    if (!roles.includes(role)) {
+      setRole(roles[0] || "customer");
     }
-  }, [mode, role, setRole]);
+  }, [role, roles, setRole]);
 
   useEffect(() => {
     if (mode === "login") {
@@ -40,7 +42,7 @@ export default function AuthForm({ mode = "login" }) {
     setStatus("");
     setFormError("");
     try {
-      const selectedRole = mode === "register" && role === "admin" ? "customer" : role;
+      const selectedRole = roles.includes(role) ? role : roles[0] || "customer";
       let response;
       if (mode === "register") {
         response = await register({ ...form, role: selectedRole });
@@ -53,15 +55,19 @@ export default function AuthForm({ mode = "login" }) {
       const nextRole = authData?.user?.role;
       if (!nextRole) {
         logout();
+        setRole(selectedRole);
         setStatus("");
-        setFormError("We couldn't verify your account role. Please sign in again.");
+        setFormError("This account does not match the selected role.");
+        showToast("This account does not match the selected role.", "error");
         return;
       }
       const mismatch = mode === "login" ? roleMismatchMessage(selectedRole, nextRole) : "";
       if (mismatch) {
         logout();
+        setRole(selectedRole);
         setStatus("");
-        setFormError(mismatch);
+        setFormError("This account does not match the selected role.");
+        showToast("This account does not match the selected role.", "error");
         return;
       }
       const pendingCartProductId = mode === "login" && nextRole === "customer" ? takePendingCartProduct() : null;
@@ -77,20 +83,20 @@ export default function AuthForm({ mode = "login" }) {
     } catch (authError) {
       console.log(authError);
       setStatus("");
-      setFormError(
-        friendlyApiError(
-          authError,
-          mode === "register"
-            ? "We couldn't create your account right now. Please try again later."
-            : "We couldn't sign you in right now. Please check your details and try again."
-        )
+      const message = friendlyApiError(
+        authError,
+        mode === "register"
+          ? "We couldn't create your account right now. Please try again later."
+          : "We couldn't sign you in right now. Please check your details and try again."
       );
+      setFormError(message);
+      showToast(message, "error");
     }
   }
 
   return (
     <form className="auth-form panel" onSubmit={handleSubmit}>
-      <div className="role-toggle" role="group" aria-label="Account role">
+      <div className="role-toggle" role="group" aria-label="Account role" style={{ gridTemplateColumns: `repeat(${roles.length}, minmax(0, 1fr))` }}>
         {roles.map((nextRole) => (
           <button
             key={nextRole}
@@ -106,10 +112,10 @@ export default function AuthForm({ mode = "login" }) {
       {mode === "register" ? <TextField label="Full name" id="name" name="name" autoComplete="name" required /> : null}
       <TextField label="Email address" id="email" name="email" type="email" autoComplete="email" required />
       <TextField label="Password" id="password" name="password" type="password" autoComplete={mode === "login" ? "current-password" : "new-password"} required />
-      {mode === "register" && role === "merchant" ? <TextField label="Store name" id="storeName" name="storeName" /> : null}
+      {mode === "register" && role === "merchant" ? <TextField label="Store name" id="storeName" name="storeName" helper="Use the public name customers will recognize." /> : null}
       {formError ? <p className="form-error" role="alert">{formError}</p> : null}
       {status ? <p className="form-status" role="status">{status}</p> : null}
-      <button className="primary-button" type="submit" disabled={loading}>
+      <button className="primary-button is-loading-aware" type="submit" disabled={loading} aria-busy={loading}>
         {loading ? "Please wait..." : mode === "register" ? "Create Account" : "Sign In"}
       </button>
     </form>

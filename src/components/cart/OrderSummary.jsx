@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "../../routes/router.jsx";
 import { formatCurrency } from "../../utils/formatters";
 
-export default function OrderSummary({ cart, checkout = false }) {
+export default function OrderSummary({ cart, checkout = false, busy = false }) {
   const summary = cart?.summary || cart?.totals || {};
   const subtotal = summary.subtotal_amount ?? cart?.subtotal_amount ?? cart?.subtotal;
   const shipping = summary.shipping_amount ?? cart?.shipping_amount ?? cart?.shipping ?? "0.00";
@@ -21,7 +21,9 @@ export default function OrderSummary({ cart, checkout = false }) {
         <div className="order-summary__total"><dt>Total</dt><dd>{formatCurrency(total, currency)}</dd></div>
       </dl>
       {checkout ? (
-        <button className="primary-button" type="submit" form="checkout-form" disabled={!hasItems}>Place Order</button>
+        <button className="primary-button is-loading-aware" type="submit" form="checkout-form" disabled={!hasItems || busy} aria-busy={busy}>
+          {busy ? "Placing order..." : "Place Order"}
+        </button>
       ) : (
         hasItems ? <Link className="primary-button" to="/checkout">Proceed to Checkout</Link> : <button className="primary-button" type="button" disabled>Proceed to Checkout</button>
       )}

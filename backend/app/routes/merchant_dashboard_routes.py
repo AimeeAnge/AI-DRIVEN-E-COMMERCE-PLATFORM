@@ -4,6 +4,7 @@ from ..services.merchant_dashboard_service import (
     MerchantDashboardError,
     get_merchant_analytics,
     get_merchant_orders,
+    update_merchant_order_status,
 )
 from ..utils.auth import roles_required
 from ..utils.pagination import pagination_params
@@ -36,3 +37,13 @@ def orders():
     except MerchantDashboardError as exc:
         return _merchant_error(exc)
     return success_response(message="Merchant orders loaded.", data=result)
+
+
+@merchant_dashboard_bp.patch("/orders/<order_id>/status")
+@roles_required("merchant")
+def order_status(order_id):
+    try:
+        result = update_merchant_order_status(g.current_user["id"], order_id, request.get_json(silent=True) or {})
+    except MerchantDashboardError as exc:
+        return _merchant_error(exc)
+    return success_response(message="Order status updated.", data=result)
